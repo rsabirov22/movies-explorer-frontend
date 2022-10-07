@@ -1,0 +1,69 @@
+.about-project {
+  padding: 110px 0;
+  background: #FFFFFF;
+}
+
+.about-project__row {
+  display: flex;
+  gap: 40px;
+  margin-bottom: 110px;
+}
+
+.about-project__title {
+  font-family: 'Inter', 'Arial', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 1.2;
+  margin: 0 0 26px 0;
+  letter-spacing: -0.04em;
+}
+
+.about-project__text {
+  font-family: 'Inter', 'Arial', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.about-project__progress {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.about-project__progress-col {
+  text-align: center;
+}
+
+.about-project__progress-col:first-child {
+  background: #2BE080;
+  margin-bottom: 5px;
+}
+
+.about-project__progress-col:nth-child(2) {
+  background: #F2F2F2;
+  margin-bottom: 5px;
+}
+
+.about-project__progress-col:nth-child(2n+1) {
+  width: 20%;
+}
+
+.about-project__progress-col:nth-child(2n) {
+  width: 80%;
+}
+
+.about-project__progress-text {
+  font-family: 'Inter', 'Arial', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.2;
+  margin: 0 0 23px 0;
+  padding: 10px 0;
+  margin: 0;
+}
+
+.about-project__progress-text_bottom {
+  font-weight: 500;
+  color: #A0A0A0;
+}
