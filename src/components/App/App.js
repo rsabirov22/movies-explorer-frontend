@@ -1,3 +1,5 @@
+import {Route, Switch, Link } from 'react-router-dom';
+
 import Header from "../Header/Header";
 import Promo from '../Promo/Promo.js';
 import Main from '../Main/Main.js';
@@ -8,16 +10,29 @@ import './App.css';
 function App() {
   return (
     <div className="page">
+      
+      <Switch>
+        <Route exact={true} path = '/'>
 
-        <Header></Header>
+          <Header
+            className="header"
+          >
+            <div className="header__authorize">
+              <Link className="header__signup" to="/signup">Регистрация</Link>
+              <button className="header__signin" type='button'>Войти</button>
+            </div>
+          </Header>
 
-        <Promo/>
+          <Promo/>
 
-        <NavTab />
+          <NavTab />
 
-        <Main />
+          <Main />
 
-        <Footer />
+          <Footer />
+
+        </Route>
+      </Switch>
 
     </div>
   );

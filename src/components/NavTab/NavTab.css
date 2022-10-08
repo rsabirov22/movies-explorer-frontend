@@ -26,6 +26,7 @@
 }
 
 .nav-tab__link {
+  cursor: pointer;
   color: #FFFFFF;
   text-decoration: none;
   font-family: 'Inter', 'Arial', sans-serif;
