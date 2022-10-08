@@ -3,10 +3,24 @@
   background: #FFFFFF;
 }
 
+@media screen and (max-width: 585px) {
+  .about-project {
+    padding: 70px 0;
+  }
+}
+
 .about-project__row {
   display: flex;
   gap: 40px;
   margin-bottom: 110px;
+}
+
+@media screen and (max-width: 585px) {
+  .about-project__row {
+    flex-direction: column;
+    margin-bottom: 60px;
+    gap: 55px;
+  }
 }
 
 .about-project__title {
@@ -18,12 +32,25 @@
   letter-spacing: -0.04em;
 }
 
+@media screen and (max-width: 585px) {
+  .about-project__title {
+    font-size: 18px;
+    margin: 0 0 16px 0;
+  }
+}
+
 .about-project__text {
   font-family: 'Inter', 'Arial', sans-serif;
   font-weight: 400;
   font-size: 14px;
   line-height: 1.4;
   margin: 0;
+}
+
+@media screen and (max-width: 585px) {
+  .about-project__text {
+    font-size: 11px;
+  }
 }
 
 .about-project__progress {
@@ -49,8 +76,20 @@
   width: 20%;
 }
 
+@media screen and (max-width: 585px) {
+  .about-project__progress-col:nth-child(2n+1) {
+    width: 30%;
+  }
+}
+
 .about-project__progress-col:nth-child(2n) {
   width: 80%;
+}
+
+@media screen and (max-width: 585px) {
+  .about-project__progress-col:nth-child(2n) {
+    width: 70%;
+  }
 }
 
 .about-project__progress-text {
@@ -61,6 +100,12 @@
   margin: 0 0 23px 0;
   padding: 10px 0;
   margin: 0;
+}
+
+@media screen and (max-width: 585px) {
+  .about-project__progress-text {
+    font-size: 11px;
+  }
 }
 
 .about-project__progress-text_bottom {

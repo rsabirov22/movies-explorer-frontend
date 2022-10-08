@@ -16,3 +16,9 @@
   max-width: 1280px;
   margin: 0 auto;
 }
+
+@media screen and (max-width: 585px) {
+  .page__container {
+    padding: 0 18px;
+  }
+}

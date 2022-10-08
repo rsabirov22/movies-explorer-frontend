@@ -24,15 +24,10 @@
 }
 
 @media screen and (max-width: 768px) {
-  /* .promo {
-    min-height: 784px;
-  } */
+
 }
 
-@media screen and (max-width: 540px) {
-  /* .promo {
-    min-height: 570px;
-  } */
+@media screen and (max-width: 585px) {
   .promo__title {
     font-size: 31px;
     max-width: 320px;

@@ -19,6 +19,12 @@
   gap: 40px;
 }
 
+@media screen and (max-width: 585px) {
+  .nav-tab__list {
+    gap: 25px;
+  }
+}
+
 .nav-tab__link {
   color: #FFFFFF;
   text-decoration: none;
@@ -27,6 +33,12 @@
   font-size: 13px;
   line-height: 1.2;
   padding: 20px 0;
+}
+
+@media screen and (max-width: 585px) {
+  .nav-tab__link {
+    font-size: 11px;
+  }
 }
 
 .nav-tab__link:after {
