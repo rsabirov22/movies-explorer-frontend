@@ -144,16 +144,9 @@
   line-height: 1.2;
   text-decoration: none;
   color: #000000;
+  transition: opacity 0.4s ease;
 }
 
-.about-me__link:after {
-  display: block;
-  content: '';
-  height: 1px;
-  background: #FFFFFF;
-  transition: background 0.4s ease;
-}
-
-.about-me__link:hover:after {
-  background: #000000;
+.about-me__link:hover {
+  opacity: 0.7;
 }

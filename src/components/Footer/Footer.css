@@ -81,6 +81,7 @@
   line-height: 1.2;
   color: #000000;
   text-decoration: none;
+  transition: opacity 0.4s ease;
 }
 
 @media screen and (max-width: 585px) {
@@ -89,14 +90,6 @@
   }
 }
 
-.footer__link:after {
-  display: block;
-  content: '';
-  height: 1px;
-  background: #FFFFFF;
-  transition: background 0.4s ease;
-}
-
-.footer__link:hover:after {
-  background: #000000;
+.footer__link:hover {
+  opacity: 0.7;
 }
