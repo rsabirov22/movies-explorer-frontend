@@ -12,11 +12,11 @@ function AboutMe () {
                 <h2 className="about-me__title">Руслан</h2>
                 <p className="about-me__description">Фронтенд-разработчик, 37 лет</p>
                 <p className="about-me__text">Я родился и живу в Кыргызстане - г.Бишкек. 
-                Длительное время занимался исключельно версткой, и, осознав необходимость двигаться дальше в сторону фронтенд-разработки, выбрал Я.Практикум. 
+                Длительное время занимался исключельно версткой, и, осознав необходимость двигаться дальше в сторону фронтенд-разработки, выбрал Яндекс.Практикум. 
                 О чем не пожалел. Я хочу стать Frontend-разработчиком в продуктовой компании. 
                 Для меня важно ощущать причастность к созданию продукта, 
                 которым пользуется большое количество людей.</p>
-                <a href="https://github.com/rsabirov22" target="_blank" className='about-me__link' rel="noreferrer">Github</a>
+                <a className="about-me__link" href="https://github.com/rsabirov22" target="_blank" rel="noreferrer">Github</a>
               </div>
               <div className="about-me__img">
                 <img  className='about-me__pic' src={foto} alt="фото"/>
