@@ -1,7 +1,6 @@
 import React from 'react';
 import SearchForm from '../SearchForm/SearchForm.js';
-// import Techs from '../Techs/Techs.js';
-// import AboutMe from '../AboutMe/AboutMe.js';
+import MoviesCardList from '../MoviesCardList/MoviesCardList.js';
 import './Movies.css';
 
 function Movies () {
@@ -10,6 +9,8 @@ function Movies () {
         <main className='movies'>
 
           <SearchForm />
+
+          <MoviesCardList className={"movies-card__button movies-card__button_saved"}/>
 
         </main>
     );

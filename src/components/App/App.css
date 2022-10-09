@@ -17,6 +17,12 @@
   margin: 0 auto;
 }
 
+@media screen and (max-width: 768px) {
+  .page__container {
+    padding: 0 30px;
+  }
+}
+
 @media screen and (max-width: 585px) {
   .page__container {
     padding: 0 18px;
