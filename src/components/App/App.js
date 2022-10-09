@@ -3,6 +3,7 @@ import {Route, Switch, Link } from 'react-router-dom';
 import Header from "../Header/Header";
 import Promo from '../Promo/Promo.js';
 import Main from '../Main/Main.js';
+import Movies from '../Movies/Movies.js';
 import Footer from '../Footer/Footer.js';
 import NavTab from '../NavTab/NavTab.js';
 import './App.css';
@@ -28,6 +29,8 @@ function App() {
           <NavTab />
 
           <Main />
+
+          <Movies />
 
           <Footer />
 
