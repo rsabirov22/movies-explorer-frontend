@@ -10,6 +10,7 @@ import Profile from '../Profile/Profile.js';
 import Footer from '../Footer/Footer.js';
 import NavTab from '../NavTab/NavTab.js';
 import Navigation from "../Navigation/Navigation";
+import Register from '../Register/Register.js';
 import './App.css';
 
 function App() {
@@ -107,6 +108,12 @@ function App() {
           onClose = {onClose}
           />
 
+        </Route>
+
+        <Route path = '/signup'>
+
+          <Register />
+          
         </Route>
 
       </Switch>
