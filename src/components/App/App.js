@@ -46,16 +46,22 @@ function App() {
         <Route exact={true} path = '/movies'>
 
           <Header className="header header_authorized">
-            <Navigation 
-              isOpen = {isMenuOpen}
-              onClose = {onClose}
-            />
+
+            <Navigation className="navigation navigation_desktop"/>
+
             <button className='header__menu-btn' type='button' onClick = {()=>setIsMenuOpen(true)}/>
+
           </Header>
 
           <Movies />
 
           <Footer />
+
+          <Navigation
+            className="navigation navigation_mobile"
+            isOpen = {isMenuOpen}
+            onClose = {onClose}
+          />
 
         </Route>
 

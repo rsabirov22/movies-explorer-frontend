@@ -1,7 +1,76 @@
-.navigation {
+.navigation__container {
   display: flex;
   align-items: center;
   gap: 50px;
+}
+
+@media screen  and (max-width: 768px) {
+  .navigation_desktop {
+    display: none;
+  }
+}
+
+.navigation_mobile {
+  user-select: none;
+  visibility: hidden;
+  overflow: hidden;
+  transition: visibility 0.4s ease, right 0.4s ease;
+  justify-content: flex-end;
+  z-index: 100;
+  display: flex;
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: -520px;
+  bottom: 0;
+}
+
+.navigation_mobile .navigation__container {
+  width: 100%;
+  max-width: 520px;
+  padding: 160px 0 92px 0;
+  background: #FFFFFF;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+@media screen  and (max-width: 585px) {
+  .navigation_mobile .navigation__container {
+    max-width: 100%;
+    padding: 144px 0 48px 0;
+  }
+}
+
+.navigation_mobile .navigation__links {
+  flex-direction: column;
+}
+
+.navigation_mobile .navigation__link {
+  font-family: 'Inter', 'Arial', sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 1.2;
+}
+
+.navigation_mobile .navigation__link:after {
+  display: block;
+  content: '';
+  height: 2px;
+  margin-top: 4px;
+  background: transparent;
+  transition: background 0.4s ease;
+}
+
+.navigation_mobile .navigation__link:hover:after {
+  background: #000000;
+}
+
+.navigation_opened {
+  right: 0;
+  visibility: visible;
 }
 
 .navigation__links {
@@ -18,6 +87,12 @@
   transition: opacity 0.4s ease;
   text-decoration: none;
   color: #000000;
+}
+
+@media screen  and (min-width: 769px) {
+  .navigation__link:first-child {
+    display: none;
+  }
 }
 
 .navigation__link:hover {
@@ -54,6 +129,10 @@
 }
 
 .navigation__close-menu {
+  padding: 0;
+  position: absolute;
+  top: 23px;
+  right: 23px;
   display: none;
   width: 44px;
   height: 44px;
@@ -66,6 +145,13 @@
 @media screen  and (max-width: 768px) {
   .navigation__close-menu {
     display: block;
+  }
+}
+
+@media screen  and (max-width: 585px) {
+  .navigation__close-menu {
+    top: 13px;
+    right: 13px;
   }
 }
 
