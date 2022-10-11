@@ -51,11 +51,19 @@
   height: 24px;
   padding: 0;
   display: block;
-  background: #F5F5F5 url('../../images/bookmark.svg') center center no-repeat;
   transition: opacity 0.4s ease, background 0.4s ease;
   border-radius: 36px;
   border: none;
   cursor: pointer;
+}
+
+.movies-card__button_save {
+  background: #F5F5F5 url('../../images/bookmark.svg') center center no-repeat;
+}
+
+.movies-card__button_delete {
+  background: #F5F5F5 url('../../images/close-icon.svg') center center no-repeat;
+  background-size: 10px 10px;
 }
 
 .movies-card__button_saved {

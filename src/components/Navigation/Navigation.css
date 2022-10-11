@@ -14,7 +14,7 @@
   user-select: none;
   visibility: hidden;
   overflow: hidden;
-  transition: visibility 0.4s ease, right 0.4s ease;
+  transition: visibility 0.2s ease, right 0.4s ease;
   justify-content: flex-end;
   z-index: 100;
   display: flex;

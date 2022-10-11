@@ -5,6 +5,8 @@ import Header from "../Header/Header";
 import Promo from '../Promo/Promo.js';
 import Main from '../Main/Main.js';
 import Movies from '../Movies/Movies.js';
+import SavedMovies from '../SavedMovies/SavedMovies.js';
+import Profile from '../Profile/Profile.js';
 import Footer from '../Footer/Footer.js';
 import NavTab from '../NavTab/NavTab.js';
 import Navigation from "../Navigation/Navigation";
@@ -68,14 +70,42 @@ function App() {
         <Route exact={true} path = '/saved-movies'>
           
           <Header className="header header_authorized">
-            <Navigation 
 
-            />
+            <Navigation className="navigation navigation_desktop"/>
+
+            <button className='header__menu-btn' type='button' onClick = {()=>setIsMenuOpen(true)}/>
+
           </Header>
 
-          <Movies />
+          <SavedMovies />
 
           <Footer />
+
+          <Navigation
+          className="navigation navigation_mobile"
+          isOpen = {isMenuOpen}
+          onClose = {onClose}
+          />
+
+        </Route>
+
+        <Route exact={true} path = '/profile'>
+          
+          <Header className="header header_authorized">
+
+            <Navigation className="navigation navigation_desktop"/>
+
+            <button className='header__menu-btn' type='button' onClick = {()=>setIsMenuOpen(true)}/>
+
+          </Header>
+
+          <Profile />
+
+          <Navigation
+          className="navigation navigation_mobile"
+          isOpen = {isMenuOpen}
+          onClose = {onClose}
+          />
 
         </Route>
 
