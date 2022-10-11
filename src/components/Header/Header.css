@@ -2,6 +2,10 @@
   min-height: 74px;
 }
 
+.header_authorized {
+  background: #FFFFFF;
+}
+
 .header__container {
   display: flex;
   align-items: center;
@@ -13,7 +17,7 @@
   display: inline-block;
 }
 
-.header__authorize {
+.header__toolbar {
   display: flex;
   align-items: center;
   gap: 30px;
@@ -47,5 +51,25 @@
 }
 
 .header__signin:hover {
+  opacity: 0.8;
+}
+
+.header__menu-btn {
+  display: none;
+  width: 44px;
+  height: 44px;
+  border: none;
+  cursor: pointer;
+  background: url('../../images/burger-menu-icon.svg') center center no-repeat;
+  transition: opacity 0.4s ease;
+}
+
+@media screen  and (max-width: 768px) {
+  .header__menu-btn {
+    display: block;
+  }
+}
+
+.header__menu-btn:hover {
   opacity: 0.8;
 }

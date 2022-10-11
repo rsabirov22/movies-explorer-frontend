@@ -102,20 +102,26 @@ function MoviesCardList (props) {
     return (
         <section className="movies-cards">
           <div className="page__container">
-            <div className="movies-cards__container">
+            {movies.length > 0 && 
+              <div className="movies-cards__container">
 
-              {movies.map((movie) => (
-                  <MoviesCard 
-                    image = {movie.image}
-                    key={movie.id}
-                    description = {movie.description}
-                    duration = {movie.duration}
-                    className = {props.className}>
-                  </MoviesCard>
-                  
-              ))}
+                {movies.map((movie) => (
+                    <MoviesCard 
+                      image = {movie.image}
+                      key={movie.id}
+                      description = {movie.description}
+                      duration = {movie.duration}
+                      className = {props.className}>
+                    </MoviesCard>
+                    
+                ))}
 
-            </div>
+              </div>}
+
+              {!movies.length &&
+                <p className="movies-cards__empty">
+                  Добавьте свой первый фильм
+                </p>}
           </div>
         </section>
     );
