@@ -42,7 +42,7 @@ function Profile () {
                   />
                   <span id="nickname-error" className="profile__error profile__error_visible">Пользователь с таким именем уже существует.</span>
                 </label>
-                <hr className="profile__filed-divider"></hr>
+                <hr className="profile__field-divider"></hr>
                 <label className="profile__field">
                   E-mail
                   <input
