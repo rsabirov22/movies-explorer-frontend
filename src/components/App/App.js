@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Route, Switch, Link, useHistory } from 'react-router-dom';
+import {Route, Switch, Link } from 'react-router-dom';
 
 import Header from "../Header/Header";
 import Promo from '../Promo/Promo.js';
@@ -16,9 +16,6 @@ import NotFound from "../NotFound/NotFound.js";
 import './App.css';
 
 function App() {
-
-  const history = useHistory();
-
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   function onClose () {
@@ -31,7 +28,10 @@ function App() {
       <Switch>
         <Route exact={true} path='/'>
 
-          <Header className="header">
+          <Header 
+            className="header"
+            loggedIn={false}
+          >
             <div className="header__toolbar">
               <Link className="header__signup" to="/signup">Регистрация</Link>
               <button className="header__signin" type='button'>Войти</button>
@@ -50,7 +50,10 @@ function App() {
 
         <Route exact={true} path='/movies'>
 
-          <Header className="header header_authorized">
+          <Header 
+            className="header header_authorized"
+            loggedIn={true}
+          >
 
             <Navigation className="navigation navigation_desktop"/>
 
@@ -64,15 +67,18 @@ function App() {
 
           <Navigation
             className="navigation navigation_mobile"
-            isOpen = {isMenuOpen}
-            onClose = {onClose}
+            isOpen={isMenuOpen}
+            onClose={onClose}
           />
 
         </Route>
 
         <Route exact={true} path='/saved-movies'>
           
-          <Header className="header header_authorized">
+          <Header 
+            className="header header_authorized"
+            loggedIn={true}
+          >
 
             <Navigation className="navigation navigation_desktop"/>
 
@@ -85,16 +91,19 @@ function App() {
           <Footer />
 
           <Navigation
-          className="navigation navigation_mobile"
-          isOpen = {isMenuOpen}
-          onClose = {onClose}
+            className="navigation navigation_mobile"
+            isOpen={isMenuOpen}
+            onClose={onClose}
           />
 
         </Route>
 
         <Route exact={true} path='/profile'>
           
-          <Header className="header header_authorized">
+          <Header 
+            className="header header_authorized"
+            loggedIn={true}
+          >
 
             <Navigation className="navigation navigation_desktop"/>
 
@@ -105,9 +114,9 @@ function App() {
           <Profile />
 
           <Navigation
-          className="navigation navigation_mobile"
-          isOpen = {isMenuOpen}
-          onClose = {onClose}
+            className="navigation navigation_mobile"
+            isOpen={isMenuOpen}
+            onClose={onClose}
           />
 
         </Route>

@@ -1,5 +1,4 @@
 .section-form {
-  background: #FFFFFF;
   height: 100vh;
 }
 
@@ -56,6 +55,7 @@
 @media screen  and (max-width: 585px) {
   .section-form__title {
     margin: 0 0 80px 0;
+    text-align: center;
   }
 }
 
@@ -118,6 +118,12 @@
   margin-top: auto;
 }
 
+@media screen  and (max-width: 585px) {
+  .section-form__submit-btn {
+    font-size: 12px;
+  }
+}
+
 .section-form__submit-btn:hover,
 .section-form__link:hover {
   opacity: 0.8;
@@ -137,6 +143,12 @@
   gap: 6px;
 }
 
+@media screen  and (max-width: 585px) {
+  .section-form__bottom {
+    font-size: 12px;
+  }
+}
+
 .section-form__link {
   display: block;
   transition: opacity 0.4s ease;
@@ -146,4 +158,10 @@
   font-size: 14px;
   line-height: 1.2;
   text-decoration: none;
+}
+
+@media screen  and (max-width: 585px) {
+  .section-form__link {
+    font-size: 12px;
+  }
 }
