@@ -11,6 +11,7 @@ import Footer from '../Footer/Footer.js';
 import NavTab from '../NavTab/NavTab.js';
 import Navigation from "../Navigation/Navigation";
 import Register from '../Register/Register.js';
+import Login from '../Login/Login.js';
 import './App.css';
 
 function App() {
@@ -27,7 +28,7 @@ function App() {
     <div className="page">
       
       <Switch>
-        <Route exact={true} path = '/'>
+        <Route exact={true} path='/'>
 
           <Header className="header">
             <div className="header__toolbar">
@@ -46,7 +47,7 @@ function App() {
 
         </Route>
 
-        <Route exact={true} path = '/movies'>
+        <Route exact={true} path='/movies'>
 
           <Header className="header header_authorized">
 
@@ -68,7 +69,7 @@ function App() {
 
         </Route>
 
-        <Route exact={true} path = '/saved-movies'>
+        <Route exact={true} path='/saved-movies'>
           
           <Header className="header header_authorized">
 
@@ -90,7 +91,7 @@ function App() {
 
         </Route>
 
-        <Route exact={true} path = '/profile'>
+        <Route exact={true} path='/profile'>
           
           <Header className="header header_authorized">
 
@@ -110,10 +111,16 @@ function App() {
 
         </Route>
 
-        <Route path = '/signup'>
+        <Route path='/signup'>
 
           <Register />
           
+        </Route>
+
+        <Route path='/signin'>
+
+          <Login />
+
         </Route>
 
       </Switch>

@@ -34,6 +34,15 @@
 .section-form__form {
   width: 100%;
   margin-bottom: 16px;
+  min-height: 450px;
+  display: flex;
+  flex-direction: column;
+}
+
+@media screen  and (max-width: 585px) {
+  .section-form__form {
+    min-height: 540px;
+  }
 }
 
 .section-form__title {
@@ -51,6 +60,7 @@
 }
 
 .section-form__field {
+  position: relative;
   font-family: 'Inter', 'Arial', sans-serif;
   font-weight: 400;
   font-size: 10px;
@@ -59,16 +69,6 @@
   display: block;
   width: 100%;
   margin-bottom: 20px;
-}
-
-.section-form__field:last-of-type {
-  margin-bottom: 92px;
-}
-
-@media screen  and (max-width: 585px) {
-  .section-form__field:last-of-type {
-    margin-bottom: 130px;
-  }
 }
 
 .section-form__input {
@@ -87,6 +87,18 @@
   margin-top: 10px;
 }
 
+.section-form__error {
+  font-family: 'Inter', 'Arial', sans-serif;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 1.2;
+  color: #FF3055;
+  position: absolute;
+  display: block;
+  left: 0;
+  top: 75px;
+}
+
 .section-form__submit-btn {
   display: block;
   width: 100%;
@@ -103,6 +115,7 @@
   font-weight: 500;
   font-size: 14px;
   line-height: 1.2;
+  margin-top: auto;
 }
 
 .section-form__submit-btn:hover,
@@ -118,7 +131,6 @@
   font-size: 14px;
   line-height: 1.2;
   color: #A0A0A0;
-  display: block;
   display: flex;
   justify-content: center;
   align-items: center;
