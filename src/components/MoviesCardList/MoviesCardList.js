@@ -77,24 +77,6 @@ const movies = [
       duration: '1ч42м',
       id: '12',
     },
-    {
-      description: 'Война искусств',
-      image: posterTwo,
-      duration: '1ч42м',
-      id: '13',
-    },
-    {
-      description: 'Зона',
-      image: posterTwo,
-      duration: '1ч42м',
-      id: '14',
-    },
-    {
-      description: '33 слова о дизайне',
-      image: poster,
-      duration: '1ч42м',
-      id: '15',
-    },
   ];
 
 function MoviesCardList (props) {
