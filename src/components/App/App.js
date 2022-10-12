@@ -12,6 +12,7 @@ import NavTab from '../NavTab/NavTab.js';
 import Navigation from "../Navigation/Navigation";
 import Register from '../Register/Register.js';
 import Login from '../Login/Login.js';
+import NotFound from "../NotFound/NotFound.js";
 import './App.css';
 
 function App() {
@@ -120,6 +121,12 @@ function App() {
         <Route path='/signin'>
 
           <Login />
+
+        </Route>
+
+        <Route path='/error'>
+
+          <NotFound />
 
         </Route>
 
