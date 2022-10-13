@@ -8,7 +8,6 @@ import Movies from '../Movies/Movies.js';
 import SavedMovies from '../SavedMovies/SavedMovies.js';
 import Profile from '../Profile/Profile.js';
 import Footer from '../Footer/Footer.js';
-import NavTab from '../NavTab/NavTab.js';
 import Navigation from "../Navigation/Navigation";
 import Register from '../Register/Register.js';
 import Login from '../Login/Login.js';
@@ -25,121 +24,111 @@ function App() {
   return (
     <div className="page">
       
-      <Switch>
-        <Route exact={true} path='/'>
+      <div className="page__container">
 
-          <Header 
-            className="header"
-            loggedIn={false}
-          >
-            <div className="header__toolbar">
-              <Link className="header__signup" to="/signup">Регистрация</Link>
-              <button className="header__signin" type='button'>Войти</button>
-            </div>
-          </Header>
+        <Switch>
+          <Route exact={true} path='/'>
 
-          <Promo/>
+            <Header>
+              <div className="header__toolbar">
+                <Link className="header__signup" to="/signup">Регистрация</Link>
+                <button className="header__signin" type='button'>Войти</button>
+              </div>
+            </Header>
 
-          <NavTab />
+            <Promo/>
 
-          <Main />
+            <Main />
 
-          <Footer />
+            <Footer />
 
-        </Route>
+          </Route>
 
-        <Route exact={true} path='/movies'>
+          <Route exact={true} path='/movies'>
 
-          <Header 
-            className="header header_authorized"
-            loggedIn={true}
-          >
+            <Header>
 
-            <Navigation className="navigation navigation_desktop"/>
+              <Navigation className="navigation navigation_desktop"/>
 
-            <button className='header__menu-btn' type='button' onClick = {()=>setIsMenuOpen(true)}/>
+              <button className='header__menu-btn' type='button' onClick = {()=>setIsMenuOpen(true)}/>
 
-          </Header>
+            </Header>
 
-          <Movies />
+            <Movies />
 
-          <Footer />
+            <Footer />
 
-          <Navigation
-            className="navigation navigation_mobile"
-            isOpen={isMenuOpen}
-            onClose={onClose}
-          />
+            <Navigation
+              className="navigation navigation_mobile"
+              isOpen={isMenuOpen}
+              onClose={onClose}
+            />
 
-        </Route>
+          </Route>
 
-        <Route exact={true} path='/saved-movies'>
-          
-          <Header 
-            className="header header_authorized"
-            loggedIn={true}
-          >
+          <Route exact={true} path='/saved-movies'>
+            
+            <Header>
 
-            <Navigation className="navigation navigation_desktop"/>
+              <Navigation className="navigation navigation_desktop"/>
 
-            <button className='header__menu-btn' type='button' onClick = {()=>setIsMenuOpen(true)}/>
+              <button className='header__menu-btn' type='button' onClick = {()=>setIsMenuOpen(true)}/>
 
-          </Header>
+            </Header>
 
-          <SavedMovies />
+            <SavedMovies />
 
-          <Footer />
+            <Footer />
 
-          <Navigation
-            className="navigation navigation_mobile"
-            isOpen={isMenuOpen}
-            onClose={onClose}
-          />
+            <Navigation
+              className="navigation navigation_mobile"
+              isOpen={isMenuOpen}
+              onClose={onClose}
+            />
 
-        </Route>
+          </Route>
 
-        <Route exact={true} path='/profile'>
-          
-          <Header 
-            className="header header_authorized"
-            loggedIn={true}
-          >
+          <Route exact={true} path='/profile'>
+            
+            <Header>
 
-            <Navigation className="navigation navigation_desktop"/>
+              <Navigation className="navigation navigation_desktop"/>
 
-            <button className='header__menu-btn' type='button' onClick = {()=>setIsMenuOpen(true)}/>
+              <button className='header__menu-btn' type='button' onClick = {()=>setIsMenuOpen(true)}/>
 
-          </Header>
+            </Header>
 
-          <Profile />
+            <Profile />
 
-          <Navigation
-            className="navigation navigation_mobile"
-            isOpen={isMenuOpen}
-            onClose={onClose}
-          />
+            <Navigation
+              className="navigation navigation_mobile"
+              isOpen={isMenuOpen}
+              onClose={onClose}
+            />
 
-        </Route>
+          </Route>
 
-        <Route path='/signup'>
+          <Route path='/signup'>
 
-          <Register />
-          
-        </Route>
+            <Register />
+            
+          </Route>
 
-        <Route path='/signin'>
+          <Route path='/signin'>
 
-          <Login />
+            <Login />
 
-        </Route>
+          </Route>
 
-        <Route path='/error'>
+          <Route path='/error'>
 
-          <NotFound />
+            <NotFound />
 
-        </Route>
+          </Route>
 
-      </Switch>
+        </Switch>
+        
+      </div>
 
     </div>
   );
