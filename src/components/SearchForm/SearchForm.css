@@ -1,9 +1,21 @@
 .search-form {
-  padding-top: 80px;
+  padding: 45px 0 45px 0;
+}
+
+@media screen and (max-width: 768px) {
+  .search-form {
+    padding: 60px 0 60px 0;
+  }
+}
+
+@media screen and (max-width: 585px) {
+  .search-form {
+    padding: 90px 0 50px 0;
+  }
 }
 
 .search-form__container {
-  flex: 1;
+  width: 100%;
   position: relative;
 }
 
@@ -14,25 +26,19 @@
 }
 
 .search-form__wrapper {
-  border-bottom: 1px solid #E8E8E8;
+  padding: 0 30px;
+  box-sizing: border-box;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 40px;
-  padding-bottom: 83px;
-}
-
-@media screen and (max-width: 768px) {
-  .search-form__wrapper {
-    flex-direction: column;
-    padding-bottom: 57px;
-  }
+  flex-direction: column;
+  gap: 30px;
 }
 
 @media screen and (max-width: 585px) {
   .search-form__wrapper {
-    padding-bottom: 45px;
+    padding: 0;
   }
 }
 
@@ -42,10 +48,12 @@
 
 .search-form__input {
   box-sizing: border-box;
-  padding: 12px 50px 15px 22px;
-  height: 48px;
-  border: 1px solid #E8E8E8;
-  border-radius: 50px;
+  text-align: center;
+  padding: 15px 0 15px 40px;
+  height: 56px;
+  border: none;
+  border-bottom: 1px solid #E8E8E8;
+  background: transparent url(../../images/search-icon.svg) left center no-repeat;
   outline: none;
   width: 100%;
   color: #000000;
@@ -55,26 +63,48 @@
   font-weight: 400;
 }
 
+@media screen and (max-width: 585px) {
+  .search-form__input {
+    background: transparent;
+    text-align: left;
+    padding: 15px 0 15px 0;
+  }
+}
+
 .search-form__input::placeholder {
   color: #A0A0A0;
-  font-size: 14px;
+  font-weight: 500;
+  font-size: 28px;
   line-height: 1.2;
   font-family: 'Inter', 'Arial', sans-serif;
-  font-weight: 400;
+  font-weight: 500;
+}
+
+@media screen and (max-width: 585px) {
+  .search-form__input::placeholder {
+    font-size: 18px;
+  }
 }
 
 .search-form__button {
+  font-family: 'Inter', 'Arial', sans-serif;
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 1.6;
+  text-align: center;
+  padding: 8px 0 7px 0;
+  color: #FFFFFF;
   cursor: pointer;
   border: none;
   display: block;
   height: 34px;
-  width: 34px;
-  background: #3456F3 url(../../images/search-icon.svg) center center no-repeat;
+  width: 60px;
+  background: #3456F3;
   border-radius: 48px;
   transition: opacity 0.4s ease;
   position: absolute;
   top: 7px;
-  right: 6px;
+  right: 0;
 }
 
 .search-form__button:hover {

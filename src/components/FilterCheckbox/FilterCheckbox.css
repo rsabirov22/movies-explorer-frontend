@@ -9,7 +9,7 @@
   font-family: 'Inter', 'Arial', sans-serif;
   font-weight: 400;
   display: inline-block;
-  margin-right: 15px;
+  margin-left: 15px;
 }
 
 .filter-checkBox__input {
@@ -31,6 +31,7 @@
   background: #EBEBEB;
   transition: background 0.4s ease;
   cursor: pointer;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.08);
 }
 
 .filter-checkBox__input:checked + .filter-checkBox__pseudo-item {
