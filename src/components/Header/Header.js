@@ -7,14 +7,16 @@ function Header (props) {
 
     return (
         <header className="header">
-          <div className="header__container">
-            
-            <Link className="header__logo-container" to='/'>
-              <img className="header__logo" src={logo} alt="лого"/>
-            </Link>
-        
-            {props.children}
+          <div className="page__container">
+            <div className="header__container">
+              
+              <Link className="header__logo-container" to='/'>
+                <img className="header__logo" src={logo} alt="лого"/>
+              </Link>
+          
+              {props.children}
 
+            </div>
           </div>
         </header>             
     );

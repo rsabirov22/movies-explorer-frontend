@@ -8,6 +8,17 @@
   }
 }
 
+.about-me__container {
+  box-sizing: border-box;
+  padding: 0 30px;
+}
+
+@media screen and (max-width: 585px) {
+  .about-me__container {
+    padding: 0;
+  }
+}
+
 .about-me__row {
   display: flex;
   justify-content: space-between;

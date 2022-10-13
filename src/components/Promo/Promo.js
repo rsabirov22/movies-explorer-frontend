@@ -6,8 +6,15 @@ function Promo () {
 
     return (
         <section className="promo">
-          <h1 className = "promo__title">Учебный проект студента факультета Веб-разработки.</h1>
-          <NavTab />
+          <div className="page__container">
+            <div className="promo__container">
+
+              <h1 className = "promo__title">Учебный проект студента факультета Веб-разработки.</h1>
+
+              <NavTab />
+              
+            </div>
+          </div>
         </section>             
     );
 }

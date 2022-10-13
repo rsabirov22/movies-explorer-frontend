@@ -9,6 +9,17 @@
   } 
 }
 
+.techs__container {
+  box-sizing: border-box;
+  padding: 0 30px;
+}
+
+@media screen and (max-width: 585px) {
+  .techs__container {
+    padding: 0;
+  }
+}
+
 .techs__title {
   font-family: 'Inter', 'Arial', sans-serif;
   font-weight: 400;
