@@ -6,14 +6,14 @@ function MoviesCard (props) {
 
     return (
         <div className="movies-card">
-            <img  className="movies-card__image" src={props.image} alt={props.description}/>
             <div className="movies-card__content">
+              <div className="movies-card__content-block">
                 <h2 className="movies-card__title">{props.description}</h2>
-                <button className= {props.className} type="submit"></button>
+                <p className="movies-card__description">{props.duration}</p>
+              </div>
+                <button className={props.isLiked ? 'movies-card__button movies-card__button_save movies-card__button_saved' : 'movies-card__button movies-card__button_save'} type="submit"></button>
             </div>
-
-            <p className="movies-card__description">{props.duration}</p>
-           
+            <img  className="movies-card__image" src={props.image} alt={props.description}/>
         </div>
     );
 }
