@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import logo from '../../images/logo-alternative.svg';
+import logo from '../../images/header-logo.svg';
 import './SectionWithForm.css';
 
 function SectionWithForm({ children }) {

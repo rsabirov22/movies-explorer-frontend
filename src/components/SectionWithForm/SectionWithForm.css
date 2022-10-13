@@ -21,7 +21,7 @@
 
 .section-form__home {
   display: block;
-  margin-bottom: 40px;
+  margin-bottom: 35px;
 }
 
 @media screen  and (max-width: 585px) {
@@ -73,13 +73,13 @@
 
 .section-form__input {
   font-family: 'Inter', 'Arial', sans-serif;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 13px;
   line-height: 1.2;
   padding: 13px 15px 15px 15px;
   height: 46px;
   border: none;
-  background: #F9F9F9;
+  background: #F4F4F4;
   border-radius: 8px;
   outline: none;
   width: 100%;

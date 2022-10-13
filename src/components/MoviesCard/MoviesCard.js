@@ -11,7 +11,7 @@ function MoviesCard (props) {
                 <h2 className="movies-card__title">{props.description}</h2>
                 <p className="movies-card__description">{props.duration}</p>
               </div>
-                <button className={props.isLiked ? 'movies-card__button movies-card__button_save movies-card__button_saved' : 'movies-card__button movies-card__button_save'} type="submit"></button>
+                <button className={props.isLiked ? `${props.className} movies-card__button_saved` : `${props.className}`} type="submit"></button>
             </div>
             <img  className="movies-card__image" src={props.image} alt={props.description}/>
         </div>
