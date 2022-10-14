@@ -2,7 +2,6 @@ import React, {useState} from "react";
 import {Route, Switch, Link } from 'react-router-dom';
 
 import Header from "../Header/Header";
-import Promo from '../Promo/Promo.js';
 import Main from '../Main/Main.js';
 import Movies from '../Movies/Movies.js';
 import SavedMovies from '../SavedMovies/SavedMovies.js';
@@ -33,8 +32,6 @@ function App() {
               <Link to="/signin" className="header__signin" type='button'>Войти</Link>
             </div>
           </Header>
-
-          <Promo/>
 
           <Main />
 
