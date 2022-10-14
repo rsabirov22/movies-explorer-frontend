@@ -29,8 +29,8 @@ function App() {
 
           <Header>
             <div className="header__toolbar">
-              <Link className="header__signup" to="/signup">Регистрация</Link>
-              <button className="header__signin" type='button'>Войти</button>
+              <Link to="/signup" className="header__signup">Регистрация</Link>
+              <Link to="/signin" className="header__signin" type='button'>Войти</Link>
             </div>
           </Header>
 

@@ -5,6 +5,12 @@
 
 @media screen and (max-width: 585px) {
   .techs {
+    background: #FAFAFA;
+  }
+}
+
+@media screen and (max-width: 585px) {
+  .techs {
     padding: 70px 0;
   } 
 }
