@@ -1,0 +1,33 @@
+.content {
+  color: #000000;
+}
+
+.content__block-title {
+  font-family: 'Inter', 'Arial', sans-serif;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 1.2;
+  margin: 0 0 70px 0;
+  letter-spacing: -0.04em;
+}
+
+@media screen and (max-width: 585px) {
+  .content__block-title {
+    margin: 0 0 60px 0;
+    font-size: 18px;
+  }
+}
+
+.content__block-title:after {
+  display: block;
+  content: '';
+  height: 1px;
+  background: #000000;
+  margin-top: 23px;
+}
+
+@media screen and (max-width: 585px) {
+  .content__block-title:after {
+    margin-top: 28px;
+  }
+}
