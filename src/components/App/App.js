@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Route, Switch, Link } from 'react-router-dom';
+import {Route, Switch, Link, useHistory } from 'react-router-dom';
 
 import Header from "../Header/Header";
 import Main from '../Main/Main.js';
@@ -11,13 +11,32 @@ import Navigation from "../Navigation/Navigation";
 import Register from '../Register/Register.js';
 import Login from '../Login/Login.js';
 import NotFound from "../NotFound/NotFound.js";
+import * as auth from '../../utils/auth.js';
+// import moviesApi from '../utils/moviesApi.js'
+// import mainApi from '../../utils/mainApi.js';
 import './App.css';
 
 function App() {
+  const history = useHistory();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+  const [errorMessage, setErrorMessage] = React.useState('');
+  
   function onClose () {
       setIsMenuOpen(false);
+  }
+
+  const onRegister = (data) => {
+    return auth.register(data.name, data.password, data.email)
+    .then((res) => {
+      if (res) {
+        console.log(data);
+      } else {
+        setErrorMessage(res.error);
+      }
+    })
+    .catch(err => {
+      setErrorMessage(err);
+    });
   }
 
   return (
@@ -105,7 +124,10 @@ function App() {
 
         <Route path='/signup'>
 
-          <Register />
+          <Register 
+            onRegister={onRegister}
+            errorMessage={errorMessage}
+          />
           
         </Route>
 
