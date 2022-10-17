@@ -1,12 +1,20 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import { useForm } from "react-hook-form";
 import SectionWithForm from '../SectionWithForm/SectionWithForm.js';
 
-function Login () {
+function Login ({ onLogin, errorMessage }) {
+
+  const { register, handleSubmit, formState: { errors, isValid } } = useForm({ mode: 'onChange' });
+
+  const onSubmit = (data) => {
+    onLogin(data);
+  }
+
   return (
     <SectionWithForm>
 
-      <form className="section-form__form" noValidate>
+      <form className="section-form__form" onSubmit={handleSubmit(onSubmit)} noValidate>
 
         <h1 className='section-form__title'>Рады видеть!</h1>
 
@@ -19,9 +27,15 @@ function Login () {
             name="email"
             minLength="2"
             required
-            autoComplete="off"
+            {...register("email", { 
+              required: true,
+              pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+             })}
           />
-          <span id="emailId-error" className="section-form__error"></span>
+          <span id="emailId-error" className="section-form__field-error">
+            {errors.email && errors.email.type === 'required' && 'Поле не может быть пустым'}
+            {errors.email && errors.email.type === 'pattern' && 'Неверный формат почты'}
+          </span>
         </label>
 
         <label className="section-form__field">
@@ -31,14 +45,27 @@ function Login () {
             className="section-form__input"
             id="passwordId"
             name="password"
-            minLength="2"
             required
-            autoComplete="off"
+            {...register("password", { 
+              required: true,
+             })}
           />
-          <span id="passwordId-error" className="section-form__error">Что-то пошло не так...</span>
+          <span id="passwordId-error" className="section-form__field-error">
+            {errors.password && errors.password.type === 'required' && "Поле не может быть пустым"}
+          </span>
         </label>
 
-        <button className='section-form__submit-btn' type='submit'>Войти</button>
+        <p className={errorMessage ? 'section-form__error section-form__error_visible' : 'section-form__error'}>
+          {errorMessage === 'Ошибка: 401' ? 'Вы ввели неправильный логин или пароль.' : 'При авторизации произошла ошибка.'}
+        </p>
+
+        <button 
+          className={isValid ? 'section-form__submit-btn' : 'section-form__submit-btn section-form__submit-btn_disabled'}
+          type='submit'
+          disabled={!isValid}
+        >
+            Войти
+        </button>
 
       </form>      
 

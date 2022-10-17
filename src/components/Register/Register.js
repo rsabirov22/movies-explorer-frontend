@@ -3,11 +3,12 @@ import {Link} from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import SectionWithForm from '../SectionWithForm/SectionWithForm.js';
 
-function Register ({ onRegister, errorMessage, success }) {
+function Register ({ onRegister, errorMessage }) {
 
   const { register, handleSubmit, formState: { errors, isValid } } = useForm({ mode: 'onChange' });
+
   const onSubmit = (data) => {
-    onRegister(data)
+    onRegister(data);
   }
 
   return (
@@ -26,7 +27,6 @@ function Register ({ onRegister, errorMessage, success }) {
             name="name"
             minLength="2"
             required
-            autoComplete="off"
             {...register("name", { 
               required: true,
               minLength: 2,
@@ -35,10 +35,10 @@ function Register ({ onRegister, errorMessage, success }) {
              })}
           />
           <span id="nameId-error" className="section-form__field-error">
-            {errors.name && errors.name.type === 'minLength' && "Слишком короткое имя"}
-            {errors.name && errors.name.type === 'required' && "Поле не может быть пустым"}
-            {errors.name && errors.name.type === 'maxLength' && "Слишком длинное имя"}
-            {errors.name && errors.name.type === 'pattern' && "Использованы недопустимые символы"}
+            {errors.name && errors.name.type === 'minLength' && 'Слишком короткое имя'}
+            {errors.name && errors.name.type === 'required' && 'Поле не может быть пустым'}
+            {errors.name && errors.name.type === 'maxLength' && 'Слишком длинное имя'}
+            {errors.name && errors.name.type === 'pattern' && 'Использованы недопустимые символы'}
           </span>
         </label>
 
@@ -51,15 +51,14 @@ function Register ({ onRegister, errorMessage, success }) {
             name="email"
             minLength="2"
             required
-            autoComplete="off"
             {...register("email", { 
               required: true,
               pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
              })}
           />
           <span id="emailId-error" className="section-form__field-error">
-            {errors.email && errors.email.type === 'required' && "Поле не может быть пустым"}
-            {errors.email && errors.email.type === 'pattern' && "Использованы недопустимые символы"}
+            {errors.email && errors.email.type === 'required' && 'Поле не может быть пустым'}
+            {errors.email && errors.email.type === 'pattern' && 'Неверный формат почты'}
           </span>
         </label>
 
@@ -70,15 +69,13 @@ function Register ({ onRegister, errorMessage, success }) {
             className="section-form__input"
             id="passwordId"
             name="password"
-            minLength="2"
             required
-            autoComplete="off"
             {...register("password", { 
               required: true,
              })}
           />
           <span id="passwordId-error" className="section-form__field-error">
-            {errors.password && errors.password.type === 'required' && "Поле не может быть пустым"}
+            {errors.password && errors.password.type === 'required' && 'Поле не может быть пустым'}
           </span>
         </label>
 

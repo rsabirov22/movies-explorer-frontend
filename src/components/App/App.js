@@ -20,6 +20,7 @@ function App() {
   const history = useHistory();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [errorMessage, setErrorMessage] = React.useState('');
+  const [loggedIn, setLoggedIn] = useState(false);
   
   function onClose () {
       setIsMenuOpen(false);
@@ -29,7 +30,7 @@ function App() {
     return auth.register(data.name, data.password, data.email)
     .then((res) => {
       if (res) {
-        console.log(data);
+        onLogin(data);
       } else {
         setErrorMessage(res.error);
       }
@@ -37,6 +38,26 @@ function App() {
     .catch(err => {
       setErrorMessage(err);
     });
+  }
+
+  const onLogin = (data) => {
+    if (data.password && data.email) {
+      return auth.authorize(data.password, data.email)
+      .then((data) => {
+        if (data.token) {
+          localStorage.setItem('jwt', data.token);
+          setLoggedIn(true);
+          history.push('/movies');
+        } else {
+          setErrorMessage(data.error);
+          console.log(data.error)
+        }
+      })
+      .catch(err => {
+        console.log(err)
+        setErrorMessage(err);
+      });
+    }
   }
 
   return (
@@ -133,7 +154,10 @@ function App() {
 
         <Route path='/signin'>
 
-          <Login />
+          <Login
+            onLogin={onLogin}
+            errorMessage={errorMessage}
+          />
 
         </Route>
 
