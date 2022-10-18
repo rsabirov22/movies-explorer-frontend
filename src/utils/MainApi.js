@@ -21,7 +21,7 @@ class MainApi {
       credentials: 'include',
       body: JSON.stringify(data)
     })
-    .then(this.handleResponse);
+    .then(handleResponse);
   }
 
   deleteMovie(moviedId) {
@@ -30,22 +30,21 @@ class MainApi {
       headers: this._headers,
       credentials: 'include',
     })
-    .then(this.handleResponse);
+    .then(handleResponse);
   }
 
   patchProfile(data) {
-    return fetch(`${BASE_URL}/users/me`, {
+    return fetch(`${BASE_URL}/api/users/me`, {
       method: 'PATCH',
       headers: this._headers,
       credentials: 'include',
       body: JSON.stringify(data)
     })
-    .then(this.handleResponse);
+    .then(handleResponse);
   }
 }
 
 const mainApi = new MainApi({
-  baseUrl: 'http://localhost:3001',
   headers: {
     'Content-Type': 'application/json'
   },

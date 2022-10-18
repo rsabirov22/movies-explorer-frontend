@@ -25,8 +25,6 @@ function Register ({ onRegister, errorMessage }) {
             className="section-form__input"
             id="nameId"
             name="name"
-            minLength="2"
-            required
             {...register("name", { 
               required: true,
               minLength: 2,
@@ -49,8 +47,6 @@ function Register ({ onRegister, errorMessage }) {
             className="section-form__input"
             id="emailId"
             name="email"
-            minLength="2"
-            required
             {...register("email", { 
               required: true,
               pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -69,8 +65,7 @@ function Register ({ onRegister, errorMessage }) {
             className="section-form__input"
             id="passwordId"
             name="password"
-            required
-            {...register("password", { 
+            {...register("password", {
               required: true,
              })}
           />

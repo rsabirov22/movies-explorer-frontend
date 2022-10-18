@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Route, Switch, Link, useHistory } from 'react-router-dom';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
 
 import Header from "../Header/Header";
 import Main from '../Main/Main.js';
@@ -14,7 +15,7 @@ import NotFound from "../NotFound/NotFound.js";
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute.js';
 import * as auth from '../../utils/auth.js';
 // import moviesApi from '../utils/moviesApi.js'
-// import mainApi from '../../utils/mainApi.js';
+import mainApi from '../../utils/MainApi.js';
 import './App.css';
 
 function App() {
@@ -22,6 +23,32 @@ function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [errorMessage, setErrorMessage] = React.useState('');
   const [loggedIn, setLoggedIn] = useState(false);
+  const [currentUser, setCurrentUser] = React.useState({});
+  
+  React.useEffect(() => {
+    const jwt = localStorage.getItem('jwt');
+    // проверка наличия токена и валидности токена
+    if (jwt) {
+      
+      auth.getUserData(jwt)
+      .then((res) => {
+        if (res) {
+          setLoggedIn(true);
+          setCurrentUser({
+            id: res._id,
+            email: res.email,
+            name: res.name
+          });
+        } else {
+          localStorage.removeItem('jwt');
+          history.push('/signin');
+        }
+      })
+      .catch(err => console.log(err));
+
+    }
+    // проверка наличия токена и валидности токена
+  }, [loggedIn]);
   
   function onClose () {
       setIsMenuOpen(false);
@@ -55,10 +82,21 @@ function App() {
         }
       })
       .catch(err => {
-        console.log(err)
         setErrorMessage(err);
       });
     }
+  }
+
+  const onEditProfile = (data) => {
+
+    return mainApi.patchProfile(data)
+    .then((res) => {
+      setCurrentUser(res);
+    })
+    .catch(err => {
+      setErrorMessage(err);
+    });
+
   }
 
   const signOut = () => {
@@ -70,80 +108,85 @@ function App() {
   return (
     <div className="page">
       
-      <Header signOut={signOut}>
-        {!loggedIn && <div className="header__toolbar">
+      <CurrentUserContext.Provider value={currentUser}>
 
-          <Link to="/signup" className="header__signup">Регистрация</Link>
-          <Link to="/signin" className="header__signin" type='button'>Войти</Link>
+        <Header signOut={signOut}>
+          {!loggedIn && <div className="header__toolbar">
 
-        </div>}
-        {loggedIn && <Navigation className="navigation navigation_desktop"/>}
-        {loggedIn && <button className='header__menu-btn' type='button' onClick = {()=>setIsMenuOpen(true)}/>}
-      </Header>
+            <Link to="/signup" className="header__signup">Регистрация</Link>
+            <Link to="/signin" className="header__signin" type='button'>Войти</Link>
 
-      <Switch>
+          </div>}
+          {loggedIn && <Navigation className="navigation navigation_desktop"/>}
+          {loggedIn && <button className='header__menu-btn' type='button' onClick = {()=>setIsMenuOpen(true)}/>}
+        </Header>
 
-        <Route exact={true} path='/'>
+        <Switch>
 
-          <Main />
+          <Route exact={true} path='/'>
 
-        </Route>
+            <Main />
 
-        <Route path='/signup'>
+          </Route>
 
-          <Register 
-            onRegister={onRegister}
-            errorMessage={errorMessage}
-          />
-          
-        </Route>
+          <Route path='/signup'>
 
-        <Route path='/signin'>
+            <Register 
+              onRegister={onRegister}
+              errorMessage={errorMessage}
+            />
+            
+          </Route>
 
-          <Login
-            onLogin={onLogin}
-            errorMessage={errorMessage}
-          />
+          <Route path='/signin'>
 
-        </Route>
+            <Login
+              onLogin={onLogin}
+              errorMessage={errorMessage}
+            />
 
-        <ProtectedRoute
-          path='/movies'
-          loggedIn={loggedIn}
-          component={Movies}
-          isMenuOpen={isMenuOpen}
-          onClose={onClose}
-        >
-        </ProtectedRoute>
+          </Route>
 
-        <ProtectedRoute
-          path='/profile'
-          loggedIn={loggedIn}
-          component={Profile}
-          isMenuOpen={isMenuOpen}
-          onClose={onClose}
-        >
-        </ProtectedRoute>
+          <ProtectedRoute
+            path='/movies'
+            loggedIn={loggedIn}
+            component={Movies}
+            isMenuOpen={isMenuOpen}
+            onClose={onClose}
+          >
+          </ProtectedRoute>
 
-        <ProtectedRoute
-          path='/saved-movies'
-          loggedIn={loggedIn}
-          component={SavedMovies}
-          isMenuOpen={isMenuOpen}
-          onClose={onClose}
-        >
-        </ProtectedRoute>
+          <ProtectedRoute
+            path='/profile'
+            loggedIn={loggedIn}
+            component={Profile}
+            onEditProfile={onEditProfile}
+            isMenuOpen={isMenuOpen}
+            onClose={onClose}
+          >
+          </ProtectedRoute>
 
-        <Route path='/error'>
+          <ProtectedRoute
+            path='/saved-movies'
+            loggedIn={loggedIn}
+            component={SavedMovies}
+            isMenuOpen={isMenuOpen}
+            onClose={onClose}
+          >
+          </ProtectedRoute>
 
-          <NotFound />
+          <Route path='/error'>
 
-        </Route>
+            <NotFound />
 
-      </Switch>
+          </Route>
 
-      <Footer />
+        </Switch>
 
+        <Footer />
+
+      </CurrentUserContext.Provider>
+    
     </div>
   );
 }
