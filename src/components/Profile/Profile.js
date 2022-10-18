@@ -4,7 +4,7 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
 import Navigation from "../Navigation/Navigation";
 import './Profile.css';
 
-function Profile ({ isMenuOpen, onClose, onEditProfile, errorMessage }) {
+function Profile ({ isMenuOpen, onClose, onEditProfile, errorMessage, signOut }) {
 
   const { register, handleSubmit, formState: { errors, isValid } } = useForm({ mode: 'onChange' });
   const currentUser = useContext(CurrentUserContext);
@@ -75,7 +75,11 @@ function Profile ({ isMenuOpen, onClose, onEditProfile, errorMessage }) {
 
           </form>
 
-          <button className='profile__logout-btn' type='submit'>Выйти из аккаунта</button>
+          <button 
+            className='profile__logout-btn' 
+            type='submit'
+            onClick={() => signOut()}
+          >Выйти из аккаунта</button>
 
         </div>
       </div>

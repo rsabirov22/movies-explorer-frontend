@@ -1,7 +1,7 @@
 import { handleResponse } from "./utils.js";
 
 const moviesApi = {
-  getCards () {
+  getMovies () {
     return fetch ('https://api.nomoreparties.co/beatfilm-movies', {
       method:'GET',
       headers : {'Content-Type': 'application/json'}

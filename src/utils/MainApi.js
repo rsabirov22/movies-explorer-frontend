@@ -7,7 +7,8 @@ class MainApi {
   }
 
   getSavedMovies() {
-    return fetch(`${BASE_URL}/movies`, {
+    return fetch(`${BASE_URL}/api/movies`, {
+      method:'GET',
       headers: this._headers,
       credentials: 'include',
     })
@@ -15,7 +16,7 @@ class MainApi {
   }
 
   postMovie(data) {
-    return fetch(`${BASE_URL}/movies`, {
+    return fetch(`${BASE_URL}/api/movies`, {
       method: 'POST',
       headers: this._headers,
       credentials: 'include',
@@ -25,7 +26,7 @@ class MainApi {
   }
 
   deleteMovie(moviedId) {
-    return fetch(`${BASE_URL}/movies/${moviedId}`, {
+    return fetch(`${BASE_URL}/api/movies/${moviedId}`, {
       method: 'DELETE',
       headers: this._headers,
       credentials: 'include',

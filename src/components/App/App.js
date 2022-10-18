@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Route, Switch, Link, useHistory } from 'react-router-dom';
+import { Route, Switch, Link, useHistory, useLocation } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
 
 import Header from "../Header/Header";
@@ -14,16 +14,19 @@ import Login from '../Login/Login.js';
 import NotFound from "../NotFound/NotFound.js";
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute.js';
 import * as auth from '../../utils/auth.js';
-// import moviesApi from '../utils/moviesApi.js'
+import moviesApi from '../../utils/MoviesApi.js'
 import mainApi from '../../utils/MainApi.js';
 import './App.css';
 
 function App() {
   const history = useHistory();
+  const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [errorMessage, setErrorMessage] = React.useState('');
   const [loggedIn, setLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = React.useState({});
+  const [cards, setCards] = React.useState([]);
+  const [savedMovies, setsavedMovies] = React.useState([]);
   
   React.useEffect(() => {
     const jwt = localStorage.getItem('jwt');
@@ -48,6 +51,20 @@ function App() {
 
     }
     // проверка наличия токена и валидности токена
+  }, [loggedIn]);
+
+  React.useEffect(() => {
+    // Загрузка карточек
+    if (loggedIn) {
+
+      moviesApi.getMovies()
+      .then((data) => {
+        setCards(data)
+      })
+      .catch(err => console.log(err));
+
+    } 
+    // Загрузка карточек
   }, [loggedIn]);
   
   function onClose () {
@@ -97,6 +114,30 @@ function App() {
       setErrorMessage(err);
     });
 
+  }
+
+  function handleCardSave(card) {
+    
+    // console.log(card)
+
+    mainApi.postMovie({
+      movieId: card.id,
+      country: card.country,
+      image: `https://api.nomoreparties.co/${card.image.url}`,
+      description: card.description,
+      duration: card.duration,
+      nameEN: card.nameEN,
+      nameRU: card.nameRU,
+      year: card.year,
+      trailerLink: card.trailerLink,
+      director: card.director,
+      thumbnail: `https://api.nomoreparties.co/${card.image.url}`
+    })
+      .then((savedMovie) => {
+        console.log(savedMovie);
+        setsavedMovies(savedMovie);
+      })
+      .catch(err => console.log(err));
   }
 
   const signOut = () => {
@@ -153,6 +194,8 @@ function App() {
             component={Movies}
             isMenuOpen={isMenuOpen}
             onClose={onClose}
+            cards={cards}
+            onCardSave={handleCardSave}
           >
           </ProtectedRoute>
 
@@ -163,6 +206,7 @@ function App() {
             onEditProfile={onEditProfile}
             isMenuOpen={isMenuOpen}
             onClose={onClose}
+            signOut={signOut}
           >
           </ProtectedRoute>
 
@@ -170,6 +214,7 @@ function App() {
             path='/saved-movies'
             loggedIn={loggedIn}
             component={SavedMovies}
+            cards={savedMovies}
             isMenuOpen={isMenuOpen}
             onClose={onClose}
           >

@@ -7,7 +7,7 @@ function Footer () {
   const location = useLocation();
 
   return (
-      <footer className={location.pathname === '/signin' || location.pathname === '/signup' || location.pathname === '/error' ? 'footer footer_none' : 'footer'}>
+      <footer className={location.pathname === '/signin' || location.pathname === '/signup' || location.pathname === '/error' || location.pathname === '/profile' ? 'footer footer_none' : 'footer'}>
         <div className="page__container">
           <div className="footer__container">
             <p className="footer__title">Учебный проект Яндекс.Практикум х BeatFilm.</p>
