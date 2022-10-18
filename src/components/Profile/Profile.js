@@ -1,8 +1,9 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
+import Navigation from "../Navigation/Navigation";
 import './Profile.css';
 
-function Profile () {
+function Profile ({ isMenuOpen, onClose }) {
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -68,6 +69,13 @@ function Profile () {
 
             </div>
           </div>
+
+          <Navigation
+            className="navigation navigation_mobile"
+            isOpen={isMenuOpen}
+            onClose={onClose}
+          />
+
         </main>
     );
 }

@@ -3,6 +3,10 @@
   margin-bottom: 20px;
 }
 
+.header_none {
+  display: none;
+}
+
 .header__container {
   display: flex;
   align-items: center;

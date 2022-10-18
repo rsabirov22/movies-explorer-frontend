@@ -2,9 +2,10 @@ import React from 'react';
 import SearchForm from '../SearchForm/SearchForm.js';
 import MoviesCardList from '../MoviesCardList/MoviesCardList.js';
 import Preloader from '../Preloader/Preloader.js';
+import Navigation from "../Navigation/Navigation";
 import './Movies.css';
 
-function Movies () {
+function Movies ({ isMenuOpen, onClose }) {
 
     return (
         <main className='movies'>
@@ -20,6 +21,12 @@ function Movies () {
               <button className="movies__more-btn" type='button'>Ещё</button>
             </div>
           </div>
+
+          <Navigation
+            className="navigation navigation_mobile"
+            isOpen={isMenuOpen}
+            onClose={onClose}
+          />
           
         </main>
     );
