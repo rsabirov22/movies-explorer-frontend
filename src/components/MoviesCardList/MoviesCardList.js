@@ -18,6 +18,7 @@ function MoviesCardList (props) {
                     onCardSave={props.onCardSave}
                     key={movie.movieId}
                     isSaved={props.isSaved}
+                    onCardDelete={props.onCardDelete}
                   >
                   </MoviesCard>
 

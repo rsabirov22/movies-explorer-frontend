@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Route, Switch, Link, useHistory, useLocation } from 'react-router-dom';
+import { Route, Switch, Link, useHistory } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
 
 import Header from "../Header/Header";
@@ -20,7 +20,7 @@ import './App.css';
 
 function App() {
   const history = useHistory();
-  const location = useLocation();
+  // const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [errorMessage, setErrorMessage] = React.useState('');
   const [loggedIn, setLoggedIn] = useState(false);
@@ -29,6 +29,7 @@ function App() {
   const [cards, setCards] = React.useState([]);
   const [savedMovies, setsavedMovies] = React.useState([]);
   
+  // console.log(initialMovies)
   // console.log(savedMovies)
   // console.log(cards)
 
@@ -124,7 +125,7 @@ function App() {
       setErrorMessage(err);
     });
   }
-
+  // Переводим полученные фильмы в формат карточки приложения
   function makeCards() {
     const cards = initialMovies.map((movie) => ({
       movieId: movie.id,
@@ -142,7 +143,7 @@ function App() {
 
     setCards(cards);
   }
-
+  
   function getSavedCards() {
     mainApi.getSavedMovies()
     .then((data) => {
@@ -153,6 +154,14 @@ function App() {
 
   function handleCardSave(card) {
     mainApi.postMovie(card)
+    .then(() => {
+      getSavedCards();
+    })
+    .catch(err => console.log(err));
+  }
+
+  function handleCardDelete(id) {
+    mainApi.deleteMovie(id)
     .then(() => {
       getSavedCards();
     })
@@ -244,6 +253,7 @@ function App() {
             savedMovies={savedMovies}
             isMenuOpen={isMenuOpen}
             onClose={onClose}
+            onCardDelete={handleCardDelete}
           >
           </ProtectedRoute>
 

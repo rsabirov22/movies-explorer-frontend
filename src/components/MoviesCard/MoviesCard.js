@@ -2,12 +2,16 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import './MoviesCard.css';
 
-function MoviesCard ({ card, onCardSave, isSaved }) {
+function MoviesCard ({ card, onCardSave, isSaved, onCardDelete }) {
 
   const location = useLocation();
 
   function handleSaveClick() {
     onCardSave(card);
+  }
+
+  function handleDeleteClick() {
+    onCardDelete(card._id);
   }
 
   return (
@@ -24,9 +28,16 @@ function MoviesCard ({ card, onCardSave, isSaved }) {
               : 'movies-card__button movies-card__button_save'} 
               type="button"
               onClick={handleSaveClick}
-            ></button>}
+            >
+            </button>}
 
-            {location.pathname === '/saved-movies' && <button className="movies-card__button movies-card__button_delete" type="button"></button>}
+            {location.pathname === '/saved-movies' && 
+              <button 
+                className="movies-card__button movies-card__button_delete" 
+                type="button"
+                onClick={handleDeleteClick}
+              >
+              </button>}
 
         </div>
         <img  className="movies-card__image" src={card.image} alt={card.description}/>

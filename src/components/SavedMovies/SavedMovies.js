@@ -3,7 +3,7 @@ import SearchForm from '../SearchForm/SearchForm.js';
 import MoviesCardList from '../MoviesCardList/MoviesCardList.js';
 import Navigation from "../Navigation/Navigation";
 
-function SavedMovies ({ isMenuOpen, onClose, savedMovies }) {
+function SavedMovies ({ isMenuOpen, onClose, savedMovies, onCardDelete }) {
   return (
     <main className='movies'>
 
@@ -11,6 +11,7 @@ function SavedMovies ({ isMenuOpen, onClose, savedMovies }) {
 
       <MoviesCardList 
         cards={savedMovies}
+        onCardDelete={onCardDelete}
       />
 
       <Navigation

@@ -5,14 +5,14 @@ import Preloader from '../Preloader/Preloader.js';
 import Navigation from "../Navigation/Navigation";
 import './Movies.css';
 
-function Movies ({ isMenuOpen, onClose, cards, onCardSave, isSaved }) {
+function Movies ({ isMenuOpen, onClose, cards, onCardSave, isSaved, isLoading }) {
 
     return (
         <main className='movies'>
 
           <SearchForm />
 
-          <Preloader />
+          {isLoading && <Preloader />}
 
           <MoviesCardList
             cards={cards}
