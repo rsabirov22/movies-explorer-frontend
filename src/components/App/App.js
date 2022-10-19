@@ -28,10 +28,11 @@ function App() {
   const [initialMovies, setInitialMovies] = React.useState([]);
   const [cards, setCards] = React.useState([]);
   const [savedMovies, setsavedMovies] = React.useState([]);
+  const [isLoading, setIsLoading] = React.useState(false);
   
   // console.log(initialMovies)
-  // console.log(savedMovies)
-  // console.log(cards)
+  // console.log(savedMovies);
+  //console.log(cards)
 
   React.useEffect(() => {
     const jwt = localStorage.getItem('jwt');
@@ -62,8 +63,12 @@ function App() {
     // Загрузка карточек
     if (loggedIn) {
 
+      setIsLoading(true);
+
       moviesApi.getMovies()
       .then((data) => {
+
+        setIsLoading(false);
         // сохраняем данные с сервера в локальное хранилище
         localStorage.setItem('initialMovies', JSON.stringify(data));
         // сохраняем данные из локального хранилища в стэйт
@@ -148,9 +153,11 @@ function App() {
     mainApi.getSavedMovies()
     .then((data) => {
       // сохраняем данные с сервера в локальное хранилище
-      localStorage.setItem('savedMovies', JSON.stringify(data));
+      // localStorage.setItem('savedMovies', JSON.stringify(data));
       // сохраняем данные из локального хранилища в стэйт
-      setsavedMovies(JSON.parse(localStorage.getItem('savedMovies')));
+      // setsavedMovies(JSON.parse(localStorage.getItem('savedMovies')));
+      console.log(data);
+      setsavedMovies(data);
     })
     .catch(err => console.log(err));
   }
@@ -164,9 +171,12 @@ function App() {
   }
 
   function handleCardDelete(id) {
+    // console.log(id)
     mainApi.deleteMovie(id)
-    .then(() => {
-      getSavedCards();
+    .then((data) => {
+      // console.log(data)
+      setsavedMovies(savedMovies.filter(movie => movie._id !== id));
+      // console.log(savedMovies.filter(movie => movie._id !== id))
     })
     .catch(err => console.log(err));
   }
@@ -180,7 +190,6 @@ function App() {
   const signOut = () => {
     localStorage.removeItem('jwt');
     localStorage.removeItem('initialMovies');
-    localStorage.removeItem('savedMovies');
     setLoggedIn(false);
     history.push('/');
   }
@@ -236,6 +245,7 @@ function App() {
             cards={cards}
             onCardSave={handleCardSave}
             isSaved={isSaved}
+            isLoading={isLoading}
           >
           </ProtectedRoute>
 
@@ -258,6 +268,7 @@ function App() {
             isMenuOpen={isMenuOpen}
             onClose={onClose}
             onCardDelete={handleCardDelete}
+            isLoading={isLoading}
           >
           </ProtectedRoute>
 
