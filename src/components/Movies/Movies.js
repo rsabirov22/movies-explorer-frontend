@@ -5,7 +5,7 @@ import Preloader from '../Preloader/Preloader.js';
 import Navigation from "../Navigation/Navigation";
 import './Movies.css';
 
-function Movies ({ isMenuOpen, onClose, cards, onCardSave }) {
+function Movies ({ isMenuOpen, onClose, cards, onCardSave, isSaved }) {
 
     return (
         <main className='movies'>
@@ -17,6 +17,7 @@ function Movies ({ isMenuOpen, onClose, cards, onCardSave }) {
           <MoviesCardList
             cards={cards}
             onCardSave={onCardSave}
+            isSaved={isSaved}
           />
 
           <div className="movies__more">

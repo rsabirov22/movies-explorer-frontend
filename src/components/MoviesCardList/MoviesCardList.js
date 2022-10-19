@@ -12,18 +12,15 @@ function MoviesCardList (props) {
               <div className="movies-cards__container">
 
                 {props.cards.map((movie) => (
-                    <MoviesCard 
-                      image={`https://api.nomoreparties.co/${movie.image.url}`}
-                      movie={movie}
-                      key={movie.id}
-                      description = {movie.description}
-                      duration = {movie.duration}
-                      isLiked={movie.isLiked}
-                      title={movie.nameRU}
-                      trailer={movie.trailerLink}
-                      onCardSave={props.onCardSave}
-                    >
-                    </MoviesCard>
+
+                  <MoviesCard 
+                    card={movie}
+                    onCardSave={props.onCardSave}
+                    key={movie.movieId}
+                    isSaved={props.isSaved}
+                  >
+                  </MoviesCard>
+
                 ))}
 
               </div>}
