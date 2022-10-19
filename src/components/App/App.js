@@ -64,9 +64,9 @@ function App() {
 
       moviesApi.getMovies()
       .then((data) => {
-        
+        // сохраняем данные с сервера в локальное хранилище
         localStorage.setItem('initialMovies', JSON.stringify(data));
-
+        // сохраняем данные из локального хранилища в стэйт
         setInitialMovies(JSON.parse(localStorage.getItem('initialMovies')));
 
         makeCards();
@@ -147,7 +147,10 @@ function App() {
   function getSavedCards() {
     mainApi.getSavedMovies()
     .then((data) => {
-      setsavedMovies(data);
+      // сохраняем данные с сервера в локальное хранилище
+      localStorage.setItem('savedMovies', JSON.stringify(data));
+      // сохраняем данные из локального хранилища в стэйт
+      setsavedMovies(JSON.parse(localStorage.getItem('savedMovies')));
     })
     .catch(err => console.log(err));
   }
@@ -176,7 +179,8 @@ function App() {
 
   const signOut = () => {
     localStorage.removeItem('jwt');
-    localStorage.removeItem('cards');
+    localStorage.removeItem('initialMovies');
+    localStorage.removeItem('savedMovies');
     setLoggedIn(false);
     history.push('/');
   }
