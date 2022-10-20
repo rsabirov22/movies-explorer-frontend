@@ -5,11 +5,11 @@ function FilterCheckBox () {
     return(
         <div className='filter-checkBox'>
           <form className='filter-checkBox__form'>
-            <label htmlFor="short-movies" className='filter-checkBox__label'>
+            <label htmlFor="shortMovies" className='filter-checkBox__label'>
               <input 
                 type="checkbox" 
                 name="short-checkbox" 
-                id="short-movies" 
+                id="shortMovies" 
                 className='filter-checkBox__input'
                 value="only-shorts"
               />

@@ -4,16 +4,18 @@ import Preloader from '../Preloader/Preloader.js';
 import { useLocation } from 'react-router-dom';
 import './MoviesCardList.css';
 
-function MoviesCardList ({ cards, onCardSave, isSaved, onCardDelete, isLoading }) {
+function MoviesCardList ({ cards, onCardSave, isSaved, onCardDelete, isLoading, isNoResults }) {
 
-  const [cardsOnScreen, setCardsOnScreen] = React.useState(cards);
+  // console.log(cards);
+
+  const [cardsOnScreen, setCardsOnScreen] = React.useState([]);
   const location = useLocation();
 
   React.useEffect(() => {
 
     loadCards();
       
-  }, []);
+  }, [cards]);
 
   function loadCards() {
 
@@ -52,7 +54,7 @@ function MoviesCardList ({ cards, onCardSave, isSaved, onCardDelete, isLoading }
                 <Preloader />
               </div>}
 
-              {!isLoading && <div className="movies-cards__container">
+              {!isLoading && !isNoResults && <div className="movies-cards__container">
 
                 {cardsOnScreen.map((movie) => (
 
@@ -71,12 +73,18 @@ function MoviesCardList ({ cards, onCardSave, isSaved, onCardDelete, isLoading }
 
               {!cards.length && location.pathname === '/saved-movies' &&
                 <p className="movies-cards__empty">
-                  Добавьте свой первый фильм
+                  {isNoResults ? 'Ничего не найдено' : 'Добавьте свой первый фильм'}
+                </p>}
+
+              {isNoResults &&
+                <p className="movies-cards__empty">
+                  Ничего не найдено
                 </p>}
 
             {location.pathname === '/movies' && 
             cards.length > cardsOnScreen.length &&
             !isLoading &&
+            !isNoResults &&
               <div className="movies__more">
                 <button 
                   className="movies__more-btn" 

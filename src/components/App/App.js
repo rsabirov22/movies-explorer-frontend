@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Route, Switch, Link, useHistory } from 'react-router-dom';
+import { Route, Switch, Link, useHistory, useLocation } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
 
 import Header from "../Header/Header";
@@ -20,7 +20,7 @@ import './App.css';
 
 function App() {
   const history = useHistory();
-  // const location = useLocation();
+  const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [errorMessage, setErrorMessage] = React.useState('');
   const [loggedIn, setLoggedIn] = useState(false);
@@ -28,11 +28,14 @@ function App() {
   const [initialMovies, setInitialMovies] = React.useState([]);
   const [cards, setCards] = React.useState([]);
   const [savedMovies, setsavedMovies] = React.useState([]);
+  const [filteredmovies, setFilteredmovies] = React.useState([]);
+  const [isNoResults, setIsNoResults] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
   
   // console.log(initialMovies)
   // console.log(savedMovies);
-  //console.log(cards)
+  //  console.log(cards)
+  // console.log(isNoResults);
 
   React.useEffect(() => {
     const jwt = localStorage.getItem('jwt');
@@ -153,13 +156,50 @@ function App() {
     mainApi.getSavedMovies()
     .then((data) => {
       // сохраняем данные с сервера в локальное хранилище
-      // localStorage.setItem('savedMovies', JSON.stringify(data));
+      localStorage.setItem('savedMovies', JSON.stringify(data));
       // сохраняем данные из локального хранилища в стэйт
-      // setsavedMovies(JSON.parse(localStorage.getItem('savedMovies')));
-      console.log(data);
-      setsavedMovies(data);
+      setsavedMovies(JSON.parse(localStorage.getItem('savedMovies')));
+      // console.log(data);
+      // setsavedMovies(data);
     })
     .catch(err => console.log(err));
+  }
+
+  function handleSearch(query) {
+    // console.log(cards);
+    // console.log(query)
+    if (location.pathname === '/movies') {
+
+      if (query === '') {
+        makeCards();
+      } else {
+        const result = cards.filter(card => card.nameRU.toLowerCase().includes(query.toLowerCase()));
+        // console.log(result);
+        if (result.length === 0) {
+          setIsNoResults(true);
+        } else {
+          setIsNoResults(false);
+          setCards(result);
+        }
+      }
+
+    } else if (location.pathname === '/saved-movies') {
+
+      if (query === '') {
+        setsavedMovies(JSON.parse(localStorage.getItem('savedMovies')));
+      } else {
+        const result = savedMovies.filter(card => card.nameRU.toLowerCase().includes(query.toLowerCase()));
+        // console.log(result);
+        if (result.length === 0) {
+          setIsNoResults(true);
+        } else {
+          setIsNoResults(false);
+          setsavedMovies(result);
+        }
+      }
+
+    }
+
   }
 
   function handleCardSave(card) {
@@ -175,6 +215,8 @@ function App() {
     mainApi.deleteMovie(id)
     .then((data) => {
       // console.log(data)
+      localStorage.removeItem('savedMovies');
+      getSavedCards();
       setsavedMovies(savedMovies.filter(movie => movie._id !== id));
       // console.log(savedMovies.filter(movie => movie._id !== id))
     })
@@ -190,7 +232,9 @@ function App() {
   const signOut = () => {
     localStorage.removeItem('jwt');
     localStorage.removeItem('initialMovies');
+    localStorage.removeItem('savedMovies');
     setLoggedIn(false);
+    setIsNoResults(false);
     history.push('/');
   }
 
@@ -200,7 +244,7 @@ function App() {
       <CurrentUserContext.Provider value={currentUser}>
 
         <Header signOut={signOut}>
-          {!loggedIn && <div className="header__toolbar">
+          {location.pathname === '/' && <div className="header__toolbar">
 
             <Link to="/signup" className="header__signup">Регистрация</Link>
             <Link to="/signin" className="header__signin" type='button'>Войти</Link>
@@ -241,7 +285,9 @@ function App() {
             loggedIn={loggedIn}
             component={Movies}
             isMenuOpen={isMenuOpen}
+            isNoResults={isNoResults}
             onClose={onClose}
+            onSearch={handleSearch}
             cards={cards}
             onCardSave={handleCardSave}
             isSaved={isSaved}
@@ -264,6 +310,7 @@ function App() {
             path='/saved-movies'
             loggedIn={loggedIn}
             component={SavedMovies}
+            onSearch={handleSearch}
             savedMovies={savedMovies}
             isMenuOpen={isMenuOpen}
             onClose={onClose}

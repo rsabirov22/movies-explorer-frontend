@@ -4,18 +4,21 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList.js';
 import Navigation from "../Navigation/Navigation";
 import './Movies.css';
 
-function Movies ({ isMenuOpen, onClose, cards, onCardSave, isSaved, isLoading }) {
+function Movies ({ isMenuOpen, onClose, cards, onCardSave, isSaved, isLoading, onSearch, isNoResults }) {
 
   return (
     <main className='movies'>
 
-      <SearchForm />
+      <SearchForm 
+        onSearch={onSearch}
+      />
 
       <MoviesCardList
         cards={cards}
         onCardSave={onCardSave}
         isSaved={isSaved}
         isLoading={isLoading}
+        isNoResults={isNoResults}
       />
 
       <Navigation
