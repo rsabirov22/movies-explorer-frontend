@@ -165,12 +165,18 @@ function App() {
     .catch(err => console.log(err));
   }
 
-  function handleSearch(query) {
+  function handleSearch(query, shorts) {
     // console.log(cards);
     // console.log(query)
+    console.log(shorts);
+
+
     if (location.pathname === '/movies') {
 
+      localStorage.setItem('searchQuery', JSON.stringify(query));
+
       if (query === '') {
+        localStorage.removeItem('searchResults');
         makeCards();
       } else {
         const result = cards.filter(card => card.nameRU.toLowerCase().includes(query.toLowerCase()));
@@ -179,6 +185,7 @@ function App() {
           setIsNoResults(true);
         } else {
           setIsNoResults(false);
+          localStorage.setItem('searchResults', JSON.stringify(result));
           setCards(result);
         }
       }
@@ -233,6 +240,8 @@ function App() {
     localStorage.removeItem('jwt');
     localStorage.removeItem('initialMovies');
     localStorage.removeItem('savedMovies');
+    localStorage.removeItem('searchQuery');
+    localStorage.removeItem('searchResults');
     setLoggedIn(false);
     setIsNoResults(false);
     history.push('/');
