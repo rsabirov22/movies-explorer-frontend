@@ -3,7 +3,7 @@ import FilterCheckBox from '../FilterCheckbox/FilterCheckbox.js';
 import { useLocation } from 'react-router-dom';
 import './SearchForm.css';
 
-function SearchForm ({ onSearch }) {
+function SearchForm ({ onSearch, onShorts }) {
   const location = useLocation();
   const [searchQuery, setSearchQuery] = useState(location.pathname === '/movies' ? JSON.parse(localStorage.getItem('searchQuery')) : '');
 
@@ -32,7 +32,9 @@ function SearchForm ({ onSearch }) {
             </form>
           </div>
           <div className="search-form__toggle">
-            <FilterCheckBox onSearch={onSearch} />
+            <FilterCheckBox 
+              onShorts={onShorts}
+            />
           </div>
         </div>
       </div>

@@ -1,28 +1,38 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import './FilterCheckbox.css';
 
-function FilterCheckBox ({ onSearch }) {
-  const [isShortsOnly, setIsShortsOnly]= React.useState(false);
-  console.log(isShortsOnly);
+function FilterCheckBox ({ onShorts }) {
+  const location = useLocation();
+  const [isChecked, setIsChecked]= React.useState(location.pathname === '/movies' ? JSON.parse(localStorage.getItem('checked')) : false);
+  // console.log(isShortsOnly);
+  // console.log(isResetShorts);
+  // console.log(isResetShorts);
+  // console.log(isChecked);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  React.useEffect(() => {
 
-    onSearch(isShortsOnly);
-  }
+    onShorts(isChecked);
+
+    if (location.pathname === '/movies') {
+      localStorage.setItem('checked', JSON.stringify(isChecked));
+    }
+
+  }, [isChecked])
 
   return(
 
     <div className='filter-checkBox'>
-      <form className='filter-checkBox__form' onSubmit={handleSubmit} noValidate>
+      <form className='filter-checkBox__form' noValidate>
         <label htmlFor="shortMovies" className='filter-checkBox__label'>
           <input 
             type="checkbox" 
-            name="short-checkbox" 
+            name="short-checkbox"
             id="shortMovies" 
             className="filter-checkBox__input"
-            
-            onClick = {() => setIsShortsOnly(!isShortsOnly)}
+            value=""
+            checked={isChecked}
+            onChange = {() => setIsChecked(!isChecked)}
           />
           <span className="filter-checkBox__pseudo-item"></span>
           <span className="filter-checkBox__label-text">Короткометражки</span>

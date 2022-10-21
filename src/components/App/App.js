@@ -28,14 +28,17 @@ function App() {
   const [initialMovies, setInitialMovies] = React.useState([]);
   const [cards, setCards] = React.useState([]);
   const [savedMovies, setsavedMovies] = React.useState([]);
-  const [filteredmovies, setFilteredmovies] = React.useState([]);
+  // const [filteredmovies, setFilteredmovies] = React.useState([]);
   const [isNoResults, setIsNoResults] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
+  const [isShortsOnly, setIsShortsOnly] = React.useState(false);
   
   // console.log(initialMovies)
   // console.log(savedMovies);
   //  console.log(cards)
   // console.log(isNoResults);
+  // console.log(isResetShorts);
+  // console.log(isShortsOnly);
 
   React.useEffect(() => {
     const jwt = localStorage.getItem('jwt');
@@ -76,6 +79,8 @@ function App() {
         localStorage.setItem('initialMovies', JSON.stringify(data));
         // сохраняем данные из локального хранилища в стэйт
         setInitialMovies(JSON.parse(localStorage.getItem('initialMovies')));
+
+        localStorage.setItem('checked', JSON.stringify(false));
 
         makeCards();
 
@@ -165,21 +170,28 @@ function App() {
     .catch(err => console.log(err));
   }
 
-  function handleSearch(query, shorts) {
+  function handleSearch(query) {
     // console.log(cards);
     // console.log(query)
-    console.log(shorts);
-
+    // console.log(isShortsOnly);
+    let result =[];
 
     if (location.pathname === '/movies') {
 
       localStorage.setItem('searchQuery', JSON.stringify(query));
 
-      if (query === '') {
+      if ((query === '' || !query) && !isShortsOnly) {
+
         localStorage.removeItem('searchResults');
+        setIsNoResults(false);
+        // localStorage.setItem('checked', JSON.stringify(false));
+        // localStorage.removeItem('checked');
+        // setIsResetShorts(true);
         makeCards();
-      } else {
-        const result = cards.filter(card => card.nameRU.toLowerCase().includes(query.toLowerCase()));
+
+      } else if (query && !isShortsOnly) {
+
+        result = cards.filter(card => card.nameRU.toLowerCase().includes(query.toLowerCase()));
         // console.log(result);
         if (result.length === 0) {
           setIsNoResults(true);
@@ -188,14 +200,46 @@ function App() {
           localStorage.setItem('searchResults', JSON.stringify(result));
           setCards(result);
         }
+      } else if (isShortsOnly && (query === '' || !query)) {
+
+        result = cards.filter(card => card.duration <= 40);
+        // console.log(result);
+        
+        if (result.length === 0) {
+          setIsNoResults(true);
+        } else {
+          setIsNoResults(false);
+          localStorage.setItem('searchResults', JSON.stringify(result));
+          setCards(result);
+        }
+
+      } else if (isShortsOnly && query) {
+
+        result = cards.filter(card => (card.duration <= 40) && (card.nameRU.toLowerCase().includes(query.toLowerCase())));
+        // console.log(result);
+        
+        if (result.length === 0) {
+          setIsNoResults(true);
+        } else {
+          setIsNoResults(false);
+          localStorage.setItem('searchResults', JSON.stringify(result));
+          setCards(result);
+        }
+
       }
 
     } else if (location.pathname === '/saved-movies') {
 
-      if (query === '') {
+      if ((query === '' || !query) && !isShortsOnly) {
+
+        setIsNoResults(false);
         setsavedMovies(JSON.parse(localStorage.getItem('savedMovies')));
-      } else {
-        const result = savedMovies.filter(card => card.nameRU.toLowerCase().includes(query.toLowerCase()));
+        // localStorage.setItem('checked', JSON.stringify(false));
+        // setIsResetShorts(true);
+
+      } else if (query && !isShortsOnly) {
+        
+        result = savedMovies.filter(card => card.nameRU.toLowerCase().includes(query.toLowerCase()));
         // console.log(result);
         if (result.length === 0) {
           setIsNoResults(true);
@@ -203,6 +247,30 @@ function App() {
           setIsNoResults(false);
           setsavedMovies(result);
         }
+      } else if (isShortsOnly && (query === '' || !query)) {
+
+        result = savedMovies.filter(card => card.duration <= 40);
+        // console.log(result);
+        
+        if (result.length === 0) {
+          setIsNoResults(true);
+        } else {
+          setIsNoResults(false);
+          setsavedMovies(result);
+        }
+
+      } else if (isShortsOnly && query) {
+
+        result = savedMovies.filter(card => (card.duration <= 40) && (card.nameRU.toLowerCase().includes(query.toLowerCase())));
+        // console.log(result);
+        
+        if (result.length === 0) {
+          setIsNoResults(true);
+        } else {
+          setIsNoResults(false);
+          setsavedMovies(result);
+        }
+
       }
 
     }
@@ -242,6 +310,7 @@ function App() {
     localStorage.removeItem('savedMovies');
     localStorage.removeItem('searchQuery');
     localStorage.removeItem('searchResults');
+    localStorage.removeItem('checked');
     setLoggedIn(false);
     setIsNoResults(false);
     history.push('/');
@@ -259,8 +328,8 @@ function App() {
             <Link to="/signin" className="header__signin" type='button'>Войти</Link>
 
           </div>}
-          {loggedIn && <Navigation className="navigation navigation_desktop"/>}
-          {loggedIn && <button className='header__menu-btn' type='button' onClick = {()=>setIsMenuOpen(true)}/>}
+          {location.pathname !== '/' && loggedIn && <Navigation className="navigation navigation_desktop"/>}
+          {location.pathname !== '/' && loggedIn && <button className='header__menu-btn' type='button' onClick = {()=>setIsMenuOpen(true)}/>}
         </Header>
 
         <Switch>
@@ -297,6 +366,7 @@ function App() {
             isNoResults={isNoResults}
             onClose={onClose}
             onSearch={handleSearch}
+            onShorts={setIsShortsOnly}
             cards={cards}
             onCardSave={handleCardSave}
             isSaved={isSaved}
@@ -320,11 +390,13 @@ function App() {
             loggedIn={loggedIn}
             component={SavedMovies}
             onSearch={handleSearch}
+            onShorts={setIsShortsOnly}
             savedMovies={savedMovies}
             isMenuOpen={isMenuOpen}
             onClose={onClose}
             onCardDelete={handleCardDelete}
             isLoading={isLoading}
+            isNoResults={isNoResults}
           >
           </ProtectedRoute>
 
