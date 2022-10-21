@@ -25,21 +25,12 @@ function App() {
   const [errorMessage, setErrorMessage] = React.useState('');
   const [loggedIn, setLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = React.useState({});
-  const [initialMovies, setInitialMovies] = React.useState([]);
   const [cards, setCards] = React.useState([]);
   const [savedMovies, setsavedMovies] = React.useState([]);
-  // const [filteredmovies, setFilteredmovies] = React.useState([]);
   const [isNoResults, setIsNoResults] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
   const [isShortsOnly, setIsShortsOnly] = React.useState(false);
   
-  // console.log(initialMovies)
-  // console.log(savedMovies);
-  //  console.log(cards)
-  // console.log(isNoResults);
-  // console.log(isResetShorts);
-  // console.log(isShortsOnly);
-
   React.useEffect(() => {
     const jwt = localStorage.getItem('jwt');
     // проверка наличия токена и валидности токена
@@ -77,12 +68,10 @@ function App() {
         setIsLoading(false);
         // сохраняем данные с сервера в локальное хранилище
         localStorage.setItem('initialMovies', JSON.stringify(data));
-        // сохраняем данные из локального хранилища в стэйт
-        setInitialMovies(JSON.parse(localStorage.getItem('initialMovies')));
-
+        
         localStorage.setItem('checked', JSON.stringify(false));
 
-        makeCards();
+        makeCards(JSON.parse(localStorage.getItem('initialMovies')));
 
         getSavedCards();
 
@@ -139,7 +128,8 @@ function App() {
     });
   }
   // Переводим полученные фильмы в формат карточки приложения
-  function makeCards() {
+  function makeCards(initialMovies) {
+
     const cards = initialMovies.map((movie) => ({
       movieId: movie.id,
       country: movie.country,
@@ -155,6 +145,7 @@ function App() {
     }));
 
     setCards(cards);
+
   }
   
   function getSavedCards() {
@@ -164,16 +155,13 @@ function App() {
       localStorage.setItem('savedMovies', JSON.stringify(data));
       // сохраняем данные из локального хранилища в стэйт
       setsavedMovies(JSON.parse(localStorage.getItem('savedMovies')));
-      // console.log(data);
-      // setsavedMovies(data);
+
     })
     .catch(err => console.log(err));
   }
 
   function handleSearch(query) {
-    // console.log(cards);
-    // console.log(query)
-    // console.log(isShortsOnly);
+
     let result =[];
 
     if (location.pathname === '/movies') {
@@ -184,15 +172,12 @@ function App() {
 
         localStorage.removeItem('searchResults');
         setIsNoResults(false);
-        // localStorage.setItem('checked', JSON.stringify(false));
-        // localStorage.removeItem('checked');
-        // setIsResetShorts(true);
-        makeCards();
+        makeCards(JSON.parse(localStorage.getItem('initialMovies')));
 
       } else if (query && !isShortsOnly) {
 
         result = cards.filter(card => card.nameRU.toLowerCase().includes(query.toLowerCase()));
-        // console.log(result);
+        
         if (result.length === 0) {
           setIsNoResults(true);
         } else {
@@ -203,8 +188,7 @@ function App() {
       } else if (isShortsOnly && (query === '' || !query)) {
 
         result = cards.filter(card => card.duration <= 40);
-        // console.log(result);
-        
+     
         if (result.length === 0) {
           setIsNoResults(true);
         } else {
@@ -216,8 +200,7 @@ function App() {
       } else if (isShortsOnly && query) {
 
         result = cards.filter(card => (card.duration <= 40) && (card.nameRU.toLowerCase().includes(query.toLowerCase())));
-        // console.log(result);
-        
+       
         if (result.length === 0) {
           setIsNoResults(true);
         } else {
@@ -234,13 +217,11 @@ function App() {
 
         setIsNoResults(false);
         setsavedMovies(JSON.parse(localStorage.getItem('savedMovies')));
-        // localStorage.setItem('checked', JSON.stringify(false));
-        // setIsResetShorts(true);
 
       } else if (query && !isShortsOnly) {
         
         result = savedMovies.filter(card => card.nameRU.toLowerCase().includes(query.toLowerCase()));
-        // console.log(result);
+        
         if (result.length === 0) {
           setIsNoResults(true);
         } else {
@@ -250,7 +231,6 @@ function App() {
       } else if (isShortsOnly && (query === '' || !query)) {
 
         result = savedMovies.filter(card => card.duration <= 40);
-        // console.log(result);
         
         if (result.length === 0) {
           setIsNoResults(true);
@@ -262,7 +242,6 @@ function App() {
       } else if (isShortsOnly && query) {
 
         result = savedMovies.filter(card => (card.duration <= 40) && (card.nameRU.toLowerCase().includes(query.toLowerCase())));
-        // console.log(result);
         
         if (result.length === 0) {
           setIsNoResults(true);
@@ -286,14 +265,14 @@ function App() {
   }
 
   function handleCardDelete(id) {
-    // console.log(id)
+
     mainApi.deleteMovie(id)
     .then((data) => {
-      // console.log(data)
+
       localStorage.removeItem('savedMovies');
       getSavedCards();
       setsavedMovies(savedMovies.filter(movie => movie._id !== id));
-      // console.log(savedMovies.filter(movie => movie._id !== id))
+      
     })
     .catch(err => console.log(err));
   }

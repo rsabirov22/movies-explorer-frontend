@@ -6,8 +6,6 @@ import './MoviesCardList.css';
 
 function MoviesCardList ({ cards, onCardSave, isSaved, onCardDelete, isLoading, isNoResults }) {
 
-  // console.log(cards);
-
   const [cardsOnScreen, setCardsOnScreen] = React.useState([]);
   const location = useLocation();
 
@@ -29,75 +27,75 @@ function MoviesCardList ({ cards, onCardSave, isSaved, onCardDelete, isLoading, 
 
   }
 
-    window.resize = function () {
-      setTimeout(() => {
-        loadCards();
-      }, 700)
-    }
+  window.resize = function () {
+    setTimeout(() => {
+      loadCards();
+    }, 700)
+  }
 
-    function handleLoadMoreClick() {
+  function handleLoadMoreClick() {
 
-      if (window.innerWidth > 1001) {
-        setCardsOnScreen(cards.slice(0, cardsOnScreen.length + 3));
-      } else if (window.innerWidth <= 1000) {
-        setCardsOnScreen(cards.slice(0, cardsOnScreen.length + 2));
-      } 
+    if (window.innerWidth > 1001) {
+      setCardsOnScreen(cards.slice(0, cardsOnScreen.length + 3));
+    } else if (window.innerWidth <= 1000) {
+      setCardsOnScreen(cards.slice(0, cardsOnScreen.length + 2));
+    } 
 
-    }
+  }
 
-    return (
-        <section className="movies-cards">
-          <div className="page__container">
+  return (
+    <section className="movies-cards">
+      <div className="page__container">
 
-              {isLoading && 
-              <div className="movies-cards__preloader">
-                <Preloader />
-              </div>}
+          {isLoading && 
+          <div className="movies-cards__preloader">
+            <Preloader />
+          </div>}
 
-              {!isLoading && !isNoResults && <div className="movies-cards__container">
+          {!isLoading && !isNoResults && <div className="movies-cards__container">
 
-                {cardsOnScreen.map((movie) => (
+            {cardsOnScreen.map((movie) => (
 
-                  <MoviesCard 
-                    card={movie}
-                    onCardSave={onCardSave}
-                    key={movie.movieId}
-                    isSaved={isSaved}
-                    onCardDelete={onCardDelete}
-                  >
-                  </MoviesCard>
+              <MoviesCard 
+                card={movie}
+                onCardSave={onCardSave}
+                key={movie.movieId}
+                isSaved={isSaved}
+                onCardDelete={onCardDelete}
+              >
+              </MoviesCard>
 
-                ))}
+            ))}
 
-              </div>}
+          </div>}
 
-              {!cards.length && location.pathname === '/saved-movies' &&
-                <p className="movies-cards__empty">
-                  {isNoResults ? 'Ничего не найдено' : 'Добавьте свой первый фильм'}
-                </p>}
+          {!cards.length && location.pathname === '/saved-movies' &&
+            <p className="movies-cards__empty">
+              {isNoResults ? 'Ничего не найдено' : 'Добавьте свой первый фильм'}
+            </p>}
 
-              {isNoResults &&
-                <p className="movies-cards__empty">
-                  Ничего не найдено
-                </p>}
+          {isNoResults &&
+            <p className="movies-cards__empty">
+              Ничего не найдено
+            </p>}
 
-            {location.pathname === '/movies' && 
-            cards.length > cardsOnScreen.length &&
-            !isLoading &&
-            !isNoResults &&
-              <div className="movies__more">
-                <button 
-                  className="movies__more-btn" 
-                  type='button'
-                  onClick={handleLoadMoreClick}
-                >
-                  Ещё
-                </button>
-              </div>}
+        {location.pathname === '/movies' && 
+        cards.length > cardsOnScreen.length &&
+        !isLoading &&
+        !isNoResults &&
+          <div className="movies__more">
+            <button 
+              className="movies__more-btn" 
+              type='button'
+              onClick={handleLoadMoreClick}
+            >
+              Ещё
+            </button>
+          </div>}
 
-          </div>
-        </section>
-    );
+      </div>
+    </section>
+  );
 }
 
 export default MoviesCardList;

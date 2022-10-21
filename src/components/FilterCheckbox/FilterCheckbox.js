@@ -5,10 +5,6 @@ import './FilterCheckbox.css';
 function FilterCheckBox ({ onShorts }) {
   const location = useLocation();
   const [isChecked, setIsChecked]= React.useState(location.pathname === '/movies' ? JSON.parse(localStorage.getItem('checked')) : false);
-  // console.log(isShortsOnly);
-  // console.log(isResetShorts);
-  // console.log(isResetShorts);
-  // console.log(isChecked);
 
   React.useEffect(() => {
 
@@ -30,7 +26,7 @@ function FilterCheckBox ({ onShorts }) {
             name="short-checkbox"
             id="shortMovies" 
             className="filter-checkBox__input"
-            value=""
+            value="only-shorts"
             checked={isChecked}
             onChange = {() => setIsChecked(!isChecked)}
           />

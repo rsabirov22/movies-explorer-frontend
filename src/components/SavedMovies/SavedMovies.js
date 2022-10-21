@@ -4,6 +4,7 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList.js';
 import Navigation from "../Navigation/Navigation";
 
 function SavedMovies ({ isMenuOpen, onClose, savedMovies, onCardDelete, onSearch, isNoResults, onShorts }) {
+
   return (
     <main className='movies'>
 
@@ -26,6 +27,7 @@ function SavedMovies ({ isMenuOpen, onClose, savedMovies, onCardDelete, onSearch
 
     </main>
   );
+  
 }
 
 export default SavedMovies;
