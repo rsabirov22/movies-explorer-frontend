@@ -16,7 +16,7 @@
 
 ## Ссылка на проект
 
-- 
+- https://movies.exp.rsabirov.nomorepartiesxyz.ru/
 
 ## Ссылка на макет
 
