@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
 import Navigation from "../Navigation/Navigation";
@@ -7,13 +7,23 @@ import './Profile.css';
 
 function Profile ({ isMenuOpen, onClose, onEditProfile, errorMessage, signOut, successMessage }) {
 
-  const { register, handleSubmit, formState: { errors, isValid } } = useForm({ mode: 'onChange' });
+  const { register, getValues, handleSubmit, formState: { errors, isValid } } = useForm({ mode: 'onChange' });
   const currentUser = useContext(CurrentUserContext);
+  const [hasChanged, setHasChanged] = useState(false);
 
-  // console.log(currentUser);
+  const checkForChanges = () => {
+    const values = getValues();
+    
+    if (values.name !== currentUser.name || values.email !== currentUser.email) {
+      setHasChanged(true);
+    } else {
+      setHasChanged(false);
+    }
+  }
 
   const onSubmit = (data) => {
     onEditProfile(data);
+    setHasChanged(false);
   }
 
   return (
@@ -29,7 +39,8 @@ function Profile ({ isMenuOpen, onClose, onEditProfile, errorMessage, signOut, s
                 className="profile__input popup__input_type_name"
                 id="nickname"
                 name="name"
-                {...register("name", { 
+                {...register("name", {
+                  onChange: checkForChanges,
                   required: true,
                   value: currentUser.name,
                   minLength: 2,
@@ -52,7 +63,8 @@ function Profile ({ isMenuOpen, onClose, onEditProfile, errorMessage, signOut, s
                 className="profile__input popup__input_type_email"
                 id="mail"
                 name="email"
-                {...register("email", { 
+                {...register("email", {
+                  onChange: checkForChanges,
                   required: true,
                   value: currentUser.email,
                   pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -74,9 +86,9 @@ function Profile ({ isMenuOpen, onClose, onEditProfile, errorMessage, signOut, s
             />
 
             <button 
-              className={isValid ? 'profile__submit-btn' : 'profile__submit-btn profile__submit-btn_disabled'}
+              className={hasChanged && isValid ? 'profile__submit-btn' : 'profile__submit-btn profile__submit-btn_disabled'}
               type='submit'
-              disabled={!isValid}
+              disabled={!isValid && !hasChanged}
             >
               Редактировать
             </button>
