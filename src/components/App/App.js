@@ -30,6 +30,9 @@ function App() {
   const [isNoResults, setIsNoResults] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
   const [isShortsOnly, setIsShortsOnly] = React.useState(false);
+
+  // console.log(cards);
+  // console.log(savedMovies);
   
   React.useEffect(() => {
     const jwt = localStorage.getItem('jwt');
@@ -300,15 +303,15 @@ function App() {
       
       <CurrentUserContext.Provider value={currentUser}>
 
-        <Header signOut={signOut}>
-          {location.pathname === '/' && <div className="header__toolbar">
+        <Header>
+          {location.pathname === '/' && !loggedIn && <div className="header__toolbar">
 
             <Link to="/signup" className="header__signup">Регистрация</Link>
             <Link to="/signin" className="header__signin" type='button'>Войти</Link>
 
           </div>}
-          {location.pathname !== '/' && loggedIn && <Navigation className="navigation navigation_desktop"/>}
-          {location.pathname !== '/' && loggedIn && <button className='header__menu-btn' type='button' onClick = {()=>setIsMenuOpen(true)}/>}
+          {loggedIn && <Navigation className="navigation navigation_desktop"/>}
+          {loggedIn && <button className='header__menu-btn' type='button' onClick = {()=>setIsMenuOpen(true)}/>}
         </Header>
 
         <Switch>

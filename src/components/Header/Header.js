@@ -12,7 +12,7 @@ function Header (props) {
         <div className="page__container">
           <div className="header__container">
             
-            <Link className="header__logo-container" to='/' onClick={props.signOut}>
+            <Link className="header__logo-container" to='/'>
               <img className="header__logo" src={logo} alt="лого"/>
             </Link>
         

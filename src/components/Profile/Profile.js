@@ -9,6 +9,8 @@ function Profile ({ isMenuOpen, onClose, onEditProfile, errorMessage, signOut })
   const { register, handleSubmit, formState: { errors, isValid } } = useForm({ mode: 'onChange' });
   const currentUser = useContext(CurrentUserContext);
 
+  // console.log(currentUser);
+
   const onSubmit = (data) => {
     onEditProfile(data);
   }
