@@ -23,6 +23,7 @@ function App() {
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [errorMessage, setErrorMessage] = React.useState('');
+  const [successMessage, setSuccessMessage] = React.useState('');
   const [loggedIn, setLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([]);
@@ -124,9 +125,12 @@ function App() {
   const onEditProfile = (data) => {
     return mainApi.patchProfile(data)
     .then((res) => {
+      setErrorMessage('');
+      setSuccessMessage('Профиль успешно отредактирован.');
       setCurrentUser(res);
     })
     .catch(err => {
+      setSuccessMessage('');
       setErrorMessage(err);
     });
   }
@@ -361,6 +365,8 @@ function App() {
             loggedIn={loggedIn}
             component={Profile}
             onEditProfile={onEditProfile}
+            successMessage={successMessage}
+            errorMessage={errorMessage}
             isMenuOpen={isMenuOpen}
             onClose={onClose}
             signOut={signOut}

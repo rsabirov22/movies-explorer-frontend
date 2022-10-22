@@ -2,9 +2,10 @@ import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
 import Navigation from "../Navigation/Navigation";
+import MessageBlock from '../MessageBlock/MessageBlock.js';
 import './Profile.css';
 
-function Profile ({ isMenuOpen, onClose, onEditProfile, errorMessage, signOut }) {
+function Profile ({ isMenuOpen, onClose, onEditProfile, errorMessage, signOut, successMessage }) {
 
   const { register, handleSubmit, formState: { errors, isValid } } = useForm({ mode: 'onChange' });
   const currentUser = useContext(CurrentUserContext);
@@ -63,9 +64,14 @@ function Profile ({ isMenuOpen, onClose, onEditProfile, errorMessage, signOut })
               </p>
             </label>
 
-            <p className={errorMessage ? 'profile__error profile__error_visible' : 'profile__error'}>
-              {errorMessage === 'Ошибка: 409' ? ' Пользователь с таким email уже существует.' : ' При обновлении профиля произошла ошибка.'}
-            </p>
+            <div className="profile__message">
+            
+            </div>
+
+            <MessageBlock 
+              errorMessage={errorMessage}
+              successMessage={successMessage}
+            />
 
             <button 
               className={isValid ? 'profile__submit-btn' : 'profile__submit-btn profile__submit-btn_disabled'}

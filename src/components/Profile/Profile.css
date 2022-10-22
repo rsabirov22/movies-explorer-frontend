@@ -83,22 +83,6 @@
   background: #E8E8E8;
 }
 
-.profile__error {
-  font-family: 'Inter', 'Arial', sans-serif;
-  font-weight: 400;
-  font-size: 11px;
-  line-height: 1.2;
-  color: #FF004C;
-  display: block;
-  text-align: center;
-  margin: 0 0 20px 0;
-  visibility: hidden;
-}
-
-.profile__error_visible {
-  visibility: visible;
-}
-
 .profile__submit-btn,
 .profile__logout-btn {
   display: block;

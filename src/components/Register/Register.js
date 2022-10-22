@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {Link} from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import SectionWithForm from '../SectionWithForm/SectionWithForm.js';
+import MessageBlock from '../MessageBlock/MessageBlock.js';
 
 function Register ({ onRegister, errorMessage }) {
 
@@ -74,9 +75,7 @@ function Register ({ onRegister, errorMessage }) {
           </span>
         </label>
 
-        <p className={errorMessage ? 'section-form__error section-form__error_visible' : 'section-form__error'}>
-          {errorMessage === 'Ошибка: 409' ? ' Пользователь с таким email уже существует.' : 'При регистрации пользователя произошла ошибка.'}
-        </p>
+        <MessageBlock errorMessage={errorMessage}/>
 
         <button 
           className={isValid ? 'section-form__submit-btn' : 'section-form__submit-btn section-form__submit-btn_disabled'}
