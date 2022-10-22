@@ -15,17 +15,6 @@
   }
 }
 
-.movies-cards__empty {
-  display: block;
-  margin: 0;
-  text-align: center;
-  color: #A0A0A0;
-  font-family: 'Inter', 'Arial', sans-serif;
-  font-weight: 400;
-  font-size: 13px;
-  line-height: 1.2;
-}
-
 .movies-cards__container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

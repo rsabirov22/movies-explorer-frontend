@@ -1,7 +1,8 @@
 import React from 'react';
 import SearchForm from '../SearchForm/SearchForm.js';
 import MoviesCardList from '../MoviesCardList/MoviesCardList.js';
-import Navigation from "../Navigation/Navigation";
+import Navigation from "../Navigation/Navigation.js";
+import NoResults from "../NoResults/NoResults.js";
 import './Movies.css';
 
 function Movies ({ initialCards, 
@@ -23,21 +24,25 @@ function Movies ({ initialCards,
         onShorts={onShorts}
       />
 
-      {true && <MoviesCardList
-                  cards={initialCards}
-                  onCardSave={onCardSave}
-                  isSaved={isSaved}
-                  isLoading={isLoading}
-                  isNoResults={isNoResults}
+      {filteredInitialCards.length === 0 && initialCards.length > 0 && !isNoResults && 
+      <MoviesCardList
+        cards={initialCards}
+        onCardSave={onCardSave}
+        isSaved={isSaved}
+        isLoading={isLoading}
+        isNoResults={isNoResults}
       />}
 
-      {false && <MoviesCardList
-                  cards={filteredInitialCards}
-                  onCardSave={onCardSave}
-                  isSaved={isSaved}
-                  isLoading={isLoading}
-                  isNoResults={isNoResults}
+      {filteredInitialCards.length > 0 && 
+      <MoviesCardList
+        cards={filteredInitialCards}
+        onCardSave={onCardSave}
+        isSaved={isSaved}
+        isLoading={isLoading}
+        isNoResults={isNoResults}
       />}
+
+      {isNoResults && <NoResults/>}
 
       <Navigation
         className="navigation navigation_mobile"

@@ -69,6 +69,12 @@ function App() {
   }, [loggedIn]);
 
   React.useEffect(() => {
+    if (loggedIn) {
+      history.push('/movies');
+    }
+  }, [loggedIn])
+
+  React.useEffect(() => {
     // Загрузка карточек
     if (loggedIn) {
 
@@ -168,8 +174,6 @@ function App() {
 
     setInitialCards(cards);
 
-    setIsLoading(false);
-
   }
   
   // function makeSavedCards(cards) {
@@ -211,17 +215,22 @@ function App() {
         // localStorage.removeItem('searchResults');
         // setIsNoResults(false);
         // makeCards(JSON.parse(localStorage.getItem('initialMovies')));
+        setIsNoResults(false);
+        setFilteredInitialCards([]);
+        localStorage.removeItem('searchResults');
+        makeCards(JSON.parse(localStorage.getItem('initialMovies')));
 
       } else if (query && !isShortsOnly) {
 
-        // result = cards.filter(card => card.nameRU.toLowerCase().includes(query.toLowerCase()));
+        result = initialCards.filter(card => card.nameRU.toLowerCase().includes(query.toLowerCase()));
         
         if (result.length === 0) {
-          // setIsNoResults(true);
+          setIsNoResults(true);
+          setFilteredInitialCards([]);
         } else {
-          // setIsNoResults(false);
-          // localStorage.setItem('searchResults', JSON.stringify(result));
-          // setCards(result);
+          setIsNoResults(false);
+          localStorage.setItem('searchResults', JSON.stringify(result));
+          setFilteredInitialCards(result);
         }
       } else if (isShortsOnly && (query === '' || !query)) {
 

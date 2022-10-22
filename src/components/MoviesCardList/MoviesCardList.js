@@ -4,7 +4,7 @@ import Preloader from '../Preloader/Preloader.js';
 import { useLocation } from 'react-router-dom';
 import './MoviesCardList.css';
 
-function MoviesCardList ({ cards, onCardSave, isSaved, onCardDelete, isLoading, isNoResults }) {
+function MoviesCardList ({ cards, onCardSave, isSaved, onCardDelete, isLoading }) {
 
   const [cardsOnScreen, setCardsOnScreen] = React.useState([]);
   const location = useLocation();
@@ -47,50 +47,39 @@ function MoviesCardList ({ cards, onCardSave, isSaved, onCardDelete, isLoading, 
     <section className="movies-cards">
       <div className="page__container">
 
-          {isLoading && 
-          <div className="movies-cards__preloader">
-            <Preloader />
-          </div>}
+        {isLoading && 
+        <div className="movies-cards__preloader">
+          <Preloader />
+        </div>}
 
-          {!isLoading && !isNoResults && <div className="movies-cards__container">
+        {!isLoading && <div className="movies-cards__container">
 
-            {cardsOnScreen.map((movie) => (
+          {cardsOnScreen.map((movie) => (
 
-              <MoviesCard 
-                card={movie}
-                onCardSave={onCardSave}
-                key={movie.movieId}
-                isSaved={isSaved}
-                onCardDelete={onCardDelete}
-              >
-              </MoviesCard>
-
-            ))}
-
-          </div>}
-
-          {!cards.length && location.pathname === '/saved-movies' &&
-            <p className="movies-cards__empty">
-              {isNoResults ? 'Ничего не найдено' : 'Добавьте свой первый фильм'}
-            </p>}
-
-          {isNoResults &&
-            <p className="movies-cards__empty">
-              Ничего не найдено
-            </p>}
-
-        {cards.length > cardsOnScreen.length &&
-        !isLoading &&
-        !isNoResults &&
-          <div className="movies__more">
-            <button 
-              className="movies__more-btn" 
-              type='button'
-              onClick={handleLoadMoreClick}
+            <MoviesCard 
+              card={movie}
+              onCardSave={onCardSave}
+              key={movie.movieId}
+              isSaved={isSaved}
+              onCardDelete={onCardDelete}
             >
-              Ещё
-            </button>
-          </div>}
+            </MoviesCard>
+
+          ))}
+
+        </div>}
+
+        {cards.length > cardsOnScreen.length && !isLoading &&
+
+        <div className="movies__more">
+          <button 
+            className="movies__more-btn" 
+            type='button'
+            onClick={handleLoadMoreClick}
+          >
+            Ещё
+          </button>
+        </div>}
 
       </div>
     </section>
