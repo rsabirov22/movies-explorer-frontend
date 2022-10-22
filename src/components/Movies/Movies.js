@@ -4,7 +4,16 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList.js';
 import Navigation from "../Navigation/Navigation";
 import './Movies.css';
 
-function Movies ({ isMenuOpen, onClose, cards, onCardSave, isSaved, isLoading, onSearch, isNoResults, onShorts }) {
+function Movies ({ initialCards, 
+  filteredInitialCards, 
+  isMenuOpen, 
+  onClose, 
+  onCardSave, 
+  isSaved, 
+  isLoading, 
+  onSearch, 
+  isNoResults, 
+  onShorts }) {
 
   return (
     <main className='movies'>
@@ -14,13 +23,21 @@ function Movies ({ isMenuOpen, onClose, cards, onCardSave, isSaved, isLoading, o
         onShorts={onShorts}
       />
 
-      <MoviesCardList
-        cards={cards}
-        onCardSave={onCardSave}
-        isSaved={isSaved}
-        isLoading={isLoading}
-        isNoResults={isNoResults}
-      />
+      {true && <MoviesCardList
+                  cards={initialCards}
+                  onCardSave={onCardSave}
+                  isSaved={isSaved}
+                  isLoading={isLoading}
+                  isNoResults={isNoResults}
+      />}
+
+      {false && <MoviesCardList
+                  cards={filteredInitialCards}
+                  onCardSave={onCardSave}
+                  isSaved={isSaved}
+                  isLoading={isLoading}
+                  isNoResults={isNoResults}
+      />}
 
       <Navigation
         className="navigation navigation_mobile"

@@ -3,7 +3,15 @@ import SearchForm from '../SearchForm/SearchForm.js';
 import MoviesCardList from '../MoviesCardList/MoviesCardList.js';
 import Navigation from "../Navigation/Navigation";
 
-function SavedMovies ({ isMenuOpen, onClose, savedMovies, onCardDelete, onSearch, isNoResults, onShorts }) {
+function SavedMovies ({ 
+  savedCards, 
+  filteredSavedCards, 
+  isMenuOpen, 
+  onClose, 
+  onCardDelete, 
+  onSearch, 
+  isNoResults, 
+  onShorts }) {
 
   return (
     <main className='movies'>
@@ -13,11 +21,17 @@ function SavedMovies ({ isMenuOpen, onClose, savedMovies, onCardDelete, onSearch
         onShorts={onShorts}
       />
 
-      <MoviesCardList 
-        cards={savedMovies}
-        onCardDelete={onCardDelete}
-        isNoResults={isNoResults}
-      />
+      {true && <MoviesCardList 
+                  cards={savedCards}
+                  onCardDelete={onCardDelete}
+                  isNoResults={isNoResults}
+      />}
+
+      {false && <MoviesCardList 
+                  cards={filteredSavedCards}
+                  onCardDelete={onCardDelete}
+                  isNoResults={isNoResults}
+      />}
 
       <Navigation
         className="navigation navigation_mobile"

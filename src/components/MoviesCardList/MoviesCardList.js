@@ -79,8 +79,7 @@ function MoviesCardList ({ cards, onCardSave, isSaved, onCardDelete, isLoading, 
               Ничего не найдено
             </p>}
 
-        {location.pathname === '/movies' && 
-        cards.length > cardsOnScreen.length &&
+        {cards.length > cardsOnScreen.length &&
         !isLoading &&
         !isNoResults &&
           <div className="movies__more">
