@@ -41,6 +41,9 @@ function App() {
   // console.log(errorMessage);
   //  console.log(currentUser);
   //  console.log(savedCards);
+  // console.log('state cards', filteredInitialCards)
+  // console.log(isNoResults);
+  // console.log(loggedIn);
   
   React.useEffect(() => {
     const jwt = localStorage.getItem('jwt');
@@ -83,8 +86,6 @@ function App() {
         // сохраняем данные с сервера в локальное хранилище
         localStorage.setItem('initialMovies', JSON.stringify(data));
         
-        localStorage.setItem('checked', JSON.stringify(false));
-
         makeCards(JSON.parse(localStorage.getItem('initialMovies')));
         
       })
@@ -92,9 +93,22 @@ function App() {
 
       getSavedCards();
 
-    } 
+    }
     // Загрузка карточек
   }, [loggedIn]);
+
+  // React.useEffect(() => {
+
+  //   const storageCards = JSON.parse(localStorage.getItem('searchResults'));
+
+  //   // console.log('storage cards', storageCards)
+
+  //   if (loggedIn && ((storageCards && storageCards.length > 0) || (storageCards && storageCards.length === 0))) {
+  //     setFilteredInitialCards(storageCards);
+  //     setInitialCards(storageCards);
+  //   }
+    
+  // }, [location]);
   
   function onClose () {
       setIsMenuOpen(false);
@@ -119,6 +133,7 @@ function App() {
       return auth.authorize(data.password, data.email)
       .then((data) => {
         if (data.token) {
+          
           localStorage.setItem('jwt', data.token);
           setLoggedIn(true);
           history.push('/movies');
@@ -176,14 +191,16 @@ function App() {
     .catch(err => console.log(err));
 
   }
-
+  // Функция поиска
   function handleSearch(query) {
 
     let result =[];
 
     if (location.pathname === '/movies') {
 
-      localStorage.setItem('searchQuery', JSON.stringify(query));
+      localStorage.setItem('searchQuery', query);
+      localStorage.setItem('checked', isShortsOnly);
+
 
       if ((query === '' || !query) && !isShortsOnly) {
 
@@ -199,6 +216,7 @@ function App() {
         if (result.length === 0) {
           setIsNoResults(true);
           setFilteredInitialCards([]);
+          localStorage.setItem('searchResults', JSON.stringify(result));
         } else {
           setIsNoResults(false);
           localStorage.setItem('searchResults', JSON.stringify(result));
@@ -211,6 +229,7 @@ function App() {
         if (result.length === 0) {
           setIsNoResults(true);
           setFilteredInitialCards([]);
+          localStorage.setItem('searchResults', JSON.stringify(result));
         } else {
           setIsNoResults(false);
           localStorage.setItem('searchResults', JSON.stringify(result));
@@ -224,6 +243,7 @@ function App() {
         if (result.length === 0) {
           setIsNoResults(true);
           setFilteredInitialCards([]);
+          localStorage.setItem('searchResults', JSON.stringify(result));
         } else {
           setIsNoResults(false);
           localStorage.setItem('searchResults', JSON.stringify(result));

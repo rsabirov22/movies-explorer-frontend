@@ -1,11 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import FilterCheckBox from '../FilterCheckbox/FilterCheckbox.js';
 import { useLocation } from 'react-router-dom';
 import './SearchForm.css';
 
 function SearchForm ({ onSearch, onShorts }) {
+  
   const location = useLocation();
-  const [searchQuery, setSearchQuery] = useState(location.pathname === '/movies' ? JSON.parse(localStorage.getItem('searchQuery')) : '');
+  const [searchQuery, setSearchQuery] = useState('');
+  
+  useEffect(() => {
+
+    if (location.pathname === '/movies' && localStorage.getItem('searchQuery')) {
+      setSearchQuery(localStorage.getItem('searchQuery'));
+    }
+
+  }, [location])
 
   const handleSubmit = (e) => {
     e.preventDefault();

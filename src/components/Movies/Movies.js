@@ -6,15 +6,20 @@ import NoResults from "../NoResults/NoResults.js";
 import Preloader from '../Preloader/Preloader.js';
 import './Movies.css';
 
-function Movies ({ initialCards, 
+function Movies ({ 
+  initialCards, 
   filteredInitialCards, 
   isMenuOpen, 
-  onClose, 
+  onClose,
+  loggedIn,
   onCardSave, 
   isSaved, 
   onSearch, 
   isNoResults, 
   onShorts }) {
+
+    // console.log(initialCards);
+    // console.log(filteredInitialCards);
 
   return (
     <main className='movies'>
@@ -22,9 +27,10 @@ function Movies ({ initialCards,
       <SearchForm 
         onSearch={onSearch}
         onShorts={onShorts}
+        loggedIn={loggedIn}
       />
 
-      {filteredInitialCards.length === 0 && initialCards.length > 0 && !isNoResults && 
+      {/* {filteredInitialCards.length === 0 && initialCards.length > 0 && !isNoResults && 
         <MoviesCardList
           cards={initialCards}
           onCardSave={onCardSave}
@@ -32,7 +38,7 @@ function Movies ({ initialCards,
           isNoResults={isNoResults}
       />}
 
-      {filteredInitialCards.length > 0 && 
+      {filteredInitialCards.length > 0 &&  
         <MoviesCardList
           cards={filteredInitialCards}
           onCardSave={onCardSave}
@@ -40,7 +46,25 @@ function Movies ({ initialCards,
           isNoResults={isNoResults}
       />}
 
-      {isNoResults && <NoResults/>}
+      {isNoResults && <NoResults/>} */}
+
+      {initialCards.length > 0 && 
+        <MoviesCardList
+          cards={initialCards}
+          onCardSave={onCardSave}
+          isSaved={isSaved}
+          isNoResults={isNoResults}
+      />}
+
+      {filteredInitialCards.length > 0 &&  
+        <MoviesCardList
+          cards={filteredInitialCards}
+          onCardSave={onCardSave}
+          isSaved={isSaved}
+          isNoResults={isNoResults}
+      />}
+
+      {filteredInitialCards.length === 0 && <NoResults/>}
 
       {filteredInitialCards.length === 0 && initialCards.length === 0 && !isNoResults && 
         <section className="movies__preloader">

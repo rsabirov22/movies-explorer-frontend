@@ -62,7 +62,6 @@ function MoviesCardList ({ cards, onCardSave, isSaved, onCardDelete }) {
         </div>
 
         {cards.length > cardsOnScreen.length &&
-
         <div className="movies__more">
           <button 
             className="movies__more-btn" 
