@@ -94,14 +94,7 @@ function App() {
       })
       .catch(err => console.log(err));
 
-      mainApi.getSavedMovies()
-      .then((data) => {
-
-        setIsLoading(false);
-        setSavedCards(data);
-
-      })
-      .catch(err => console.log(err));
+      getSavedCards();
 
     } 
     // Загрузка карточек
@@ -175,32 +168,21 @@ function App() {
     setInitialCards(cards);
 
   }
-  
-  // function makeSavedCards(cards) {
-    // Находим карточки текущего пользователя
-    // const result = cards.filter(card => card.owner === currentUser.id);
 
-  //   setSavedCards(cards);
+  function getSavedCards() {
 
-  // }
+    setIsLoading(true);
 
-  // function getSavedCards() {
-    
-  //   setIsLoading(true);
+    mainApi.getSavedMovies()
+    .then((data) => {
 
-  //   mainApi.getSavedMovies()
-  //   .then((data) => {
-  //     // console.log(data)
-  //     setIsLoading(false);
-  //     // сохраняем данные с сервера в локальное хранилище
-  //     // localStorage.setItem('savedCards', JSON.stringify(data));
-  //     // сохраняем данные из локального хранилища в стэйт
-  //     // setSavedCards(JSON.parse(localStorage.getItem('savedCards')));
-  //     setSavedCards(data);
+      setIsLoading(false);
+      setSavedCards(data.reverse());
 
-  //   })
-  //   .catch(err => console.log(err));
-  // }
+    })
+    .catch(err => console.log(err));
+
+  }
 
   function handleSearch(query) {
 
@@ -212,9 +194,6 @@ function App() {
 
       if ((query === '' || !query) && !isShortsOnly) {
 
-        // localStorage.removeItem('searchResults');
-        // setIsNoResults(false);
-        // makeCards(JSON.parse(localStorage.getItem('initialMovies')));
         setIsNoResults(false);
         setFilteredInitialCards([]);
         localStorage.removeItem('searchResults');
@@ -234,26 +213,28 @@ function App() {
         }
       } else if (isShortsOnly && (query === '' || !query)) {
 
-        // result = cards.filter(card => card.duration <= 40);
+        result = initialCards.filter(card => card.duration <= 40);
      
         if (result.length === 0) {
-          // setIsNoResults(true);
+          setIsNoResults(true);
+          setFilteredInitialCards([]);
         } else {
-          // setIsNoResults(false);
-          // localStorage.setItem('searchResults', JSON.stringify(result));
-          // setCards(result);
+          setIsNoResults(false);
+          localStorage.setItem('searchResults', JSON.stringify(result));
+          setFilteredInitialCards(result);
         }
 
       } else if (isShortsOnly && query) {
 
-        // result = cards.filter(card => (card.duration <= 40) && (card.nameRU.toLowerCase().includes(query.toLowerCase())));
+        result = initialCards.filter(card => (card.duration <= 40) && (card.nameRU.toLowerCase().includes(query.toLowerCase())));
        
         if (result.length === 0) {
-          // setIsNoResults(true);
+          setIsNoResults(true);
+          setFilteredInitialCards([]);
         } else {
-          // setIsNoResults(false);
-          // localStorage.setItem('searchResults', JSON.stringify(result));
-          // setCards(result);
+          setIsNoResults(false);
+          localStorage.setItem('searchResults', JSON.stringify(result));
+          setFilteredInitialCards(result);
         }
 
       }
@@ -262,39 +243,43 @@ function App() {
 
       if ((query === '' || !query) && !isShortsOnly) {
 
-        // setIsNoResults(false);
-        // setsavedMovies(JSON.parse(localStorage.getItem('savedMovies')));
+        setIsNoResults(false);
+        setFilteredSavedCards([]);
+        getSavedCards();
 
       } else if (query && !isShortsOnly) {
         
-        // result = savedMovies.filter(card => card.nameRU.toLowerCase().includes(query.toLowerCase()));
+        result = savedCards.filter(card => card.nameRU.toLowerCase().includes(query.toLowerCase()));
         
         if (result.length === 0) {
-          // setIsNoResults(true);
+          setIsNoResults(true);
+          setFilteredSavedCards([]);
         } else {
-          // setIsNoResults(false);
-          // setsavedMovies(result);
+          setIsNoResults(false);
+          setFilteredSavedCards(result);
         }
       } else if (isShortsOnly && (query === '' || !query)) {
 
-        // result = savedMovies.filter(card => card.duration <= 40);
+        result = savedCards.filter(card => card.duration <= 40);
         
         if (result.length === 0) {
-          // setIsNoResults(true);
+          setIsNoResults(true);
+          setFilteredSavedCards([]);
         } else {
-          // setIsNoResults(false);
-          // setsavedMovies(result);
+          setIsNoResults(false);
+          setFilteredSavedCards(result);
         }
 
       } else if (isShortsOnly && query) {
 
-        // result = savedMovies.filter(card => (card.duration <= 40) && (card.nameRU.toLowerCase().includes(query.toLowerCase())));
+        result = savedCards.filter(card => (card.duration <= 40) && (card.nameRU.toLowerCase().includes(query.toLowerCase())));
         
         if (result.length === 0) {
-          // setIsNoResults(true);
+          setIsNoResults(true);
+          setFilteredSavedCards([]);
         } else {
-          // setIsNoResults(false);
-          // setsavedMovies(result);
+          setIsNoResults(false);
+          setFilteredSavedCards(result);
         }
 
       }

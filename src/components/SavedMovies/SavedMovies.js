@@ -2,6 +2,7 @@ import React from 'react';
 import SearchForm from '../SearchForm/SearchForm.js';
 import MoviesCardList from '../MoviesCardList/MoviesCardList.js';
 import Navigation from "../Navigation/Navigation";
+import NoResults from "../NoResults/NoResults.js";
 
 function SavedMovies ({ 
   savedCards, 
@@ -21,17 +22,21 @@ function SavedMovies ({
         onShorts={onShorts}
       />
 
-      {true && <MoviesCardList 
-                  cards={savedCards}
-                  onCardDelete={onCardDelete}
-                  isNoResults={isNoResults}
+      {filteredSavedCards.length === 0 && savedCards.length > 0 && !isNoResults && 
+      <MoviesCardList 
+        cards={savedCards}
+        onCardDelete={onCardDelete}
+        isNoResults={isNoResults}
       />}
 
-      {false && <MoviesCardList 
-                  cards={filteredSavedCards}
-                  onCardDelete={onCardDelete}
-                  isNoResults={isNoResults}
+      {filteredSavedCards.length > 0 &&  
+      <MoviesCardList 
+        cards={filteredSavedCards}
+        onCardDelete={onCardDelete}
+        isNoResults={isNoResults}
       />}
+
+      {isNoResults && <NoResults/>}
 
       <Navigation
         className="navigation navigation_mobile"
