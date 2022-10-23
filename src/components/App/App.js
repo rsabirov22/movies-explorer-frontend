@@ -27,7 +27,6 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = React.useState({});
   const [isNoResults, setIsNoResults] = React.useState(false);
-  const [isLoading, setIsLoading] = React.useState(false);
   const [isShortsOnly, setIsShortsOnly] = React.useState(false);
   // Карточки
   const [initialCards, setInitialCards] = React.useState([]);
@@ -78,12 +77,9 @@ function App() {
     // Загрузка карточек
     if (loggedIn) {
 
-      setIsLoading(true);
-
       moviesApi.getMovies()
       .then((data) => {
 
-        setIsLoading(false);
         // сохраняем данные с сервера в локальное хранилище
         localStorage.setItem('initialMovies', JSON.stringify(data));
         
@@ -171,12 +167,9 @@ function App() {
 
   function getSavedCards() {
 
-    setIsLoading(true);
-
     mainApi.getSavedMovies()
     .then((data) => {
-
-      setIsLoading(false);
+      
       setSavedCards(data.reverse());
 
     })
@@ -384,7 +377,6 @@ function App() {
             onShorts={setIsShortsOnly}
             onCardSave={handleCardSave}
             isSaved={isSaved}
-            isLoading={isLoading}
             initialCards={initialCards}
             filteredInitialCards={filteredInitialCards}
           >
@@ -412,7 +404,6 @@ function App() {
             isMenuOpen={isMenuOpen}
             onClose={onClose}
             onCardDelete={handleCardDelete}
-            isLoading={isLoading}
             isNoResults={isNoResults}
             savedCards={savedCards}
             filteredSavedCards={filteredSavedCards}

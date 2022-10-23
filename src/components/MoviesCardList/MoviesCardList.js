@@ -1,14 +1,11 @@
 import React from 'react';
 import MoviesCard from '../MoviesCard/MoviesCard.js';
-import Preloader from '../Preloader/Preloader.js';
-import { useLocation } from 'react-router-dom';
 import './MoviesCardList.css';
 
-function MoviesCardList ({ cards, onCardSave, isSaved, onCardDelete, isLoading }) {
+function MoviesCardList ({ cards, onCardSave, isSaved, onCardDelete }) {
 
   const [cardsOnScreen, setCardsOnScreen] = React.useState([]);
-  const location = useLocation();
-
+  
   React.useEffect(() => {
 
     loadCards();
@@ -47,12 +44,7 @@ function MoviesCardList ({ cards, onCardSave, isSaved, onCardDelete, isLoading }
     <section className="movies-cards">
       <div className="page__container">
 
-        {isLoading && 
-        <div className="movies-cards__preloader">
-          <Preloader />
-        </div>}
-
-        {!isLoading && <div className="movies-cards__container">
+        <div className="movies-cards__container">
 
           {cardsOnScreen.map((movie) => (
 
@@ -67,9 +59,9 @@ function MoviesCardList ({ cards, onCardSave, isSaved, onCardDelete, isLoading }
 
           ))}
 
-        </div>}
+        </div>
 
-        {cards.length > cardsOnScreen.length && !isLoading &&
+        {cards.length > cardsOnScreen.length &&
 
         <div className="movies__more">
           <button 

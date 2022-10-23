@@ -3,6 +3,7 @@ import SearchForm from '../SearchForm/SearchForm.js';
 import MoviesCardList from '../MoviesCardList/MoviesCardList.js';
 import Navigation from "../Navigation/Navigation";
 import NoResults from "../NoResults/NoResults.js";
+import Preloader from '../Preloader/Preloader.js';
 
 function SavedMovies ({ 
   savedCards, 
@@ -23,20 +24,25 @@ function SavedMovies ({
       />
 
       {filteredSavedCards.length === 0 && savedCards.length > 0 && !isNoResults && 
-      <MoviesCardList 
-        cards={savedCards}
-        onCardDelete={onCardDelete}
-        isNoResults={isNoResults}
+        <MoviesCardList 
+          cards={savedCards}
+          onCardDelete={onCardDelete}
+          isNoResults={isNoResults}
       />}
 
       {filteredSavedCards.length > 0 &&  
-      <MoviesCardList 
-        cards={filteredSavedCards}
-        onCardDelete={onCardDelete}
-        isNoResults={isNoResults}
+        <MoviesCardList 
+          cards={filteredSavedCards}
+          onCardDelete={onCardDelete}
+          isNoResults={isNoResults}
       />}
 
       {isNoResults && <NoResults/>}
+
+      {filteredSavedCards.length === 0 && savedCards.length === 0 && !isNoResults && 
+        <section className="movies__preloader">
+          <Preloader />
+        </section>}
 
       <Navigation
         className="navigation navigation_mobile"
