@@ -1,5 +1,6 @@
 import React from 'react';
 import MoviesCard from '../MoviesCard/MoviesCard.js';
+import { CARDS_TO_LOAD_LG, CARDS_TO_LOAD_SM_XS } from '../../utils/constants.js'
 import './MoviesCardList.css';
 
 function MoviesCardList ({ cards, onCardSave, isSaved, onCardDelete }) {
@@ -33,9 +34,9 @@ function MoviesCardList ({ cards, onCardSave, isSaved, onCardDelete }) {
   function handleLoadMoreClick() {
 
     if (window.innerWidth > 1001) {
-      setCardsOnScreen(cards.slice(0, cardsOnScreen.length + 3));
+      setCardsOnScreen(cards.slice(0, cardsOnScreen.length + CARDS_TO_LOAD_LG));
     } else if (window.innerWidth <= 1000) {
-      setCardsOnScreen(cards.slice(0, cardsOnScreen.length + 2));
+      setCardsOnScreen(cards.slice(0, cardsOnScreen.length + CARDS_TO_LOAD_SM_XS));
     } 
 
   }

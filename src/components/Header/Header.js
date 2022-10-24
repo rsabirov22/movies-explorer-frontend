@@ -8,19 +8,24 @@ function Header (props) {
   const location = useLocation();
 
   return (
-      <header className={location.pathname === '/signin' || location.pathname === '/signup' || location.pathname === '/error' ? 'header header_none' : 'header'}>
-        <div className="page__container">
-          <div className="header__container">
-            
-            <Link className="header__logo-container" to='/'>
-              <img className="header__logo" src={logo} alt="лого"/>
-            </Link>
-        
-            {props.children}
+    <header className={
+      location.pathname === '/' || 
+      location.pathname === '/movies' || 
+      location.pathname === '/saved-movies' || 
+      location.pathname === '/profile' ? 'header' : 'header header_none'
+    }>
+      <div className="page__container">
+        <div className="header__container">
+          
+          <Link className="header__logo-container" to='/'>
+            <img className="header__logo" src={logo} alt="лого"/>
+          </Link>
+      
+          {props.children}
 
-          </div>
         </div>
-      </header>             
+      </div>
+    </header>             
   );
 }
 

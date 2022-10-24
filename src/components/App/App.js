@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Route, Switch, Link, useHistory, useLocation } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
+import { SHORT_MOVIES } from '../../utils/constants.js'
 
 import Header from "../Header/Header";
 import Main from '../Main/Main.js';
@@ -45,37 +46,68 @@ function App() {
   // console.log('state cards', filteredInitialCards)
   // console.log(isNoResults);
   // console.log(loggedIn);
+
+  React.useEffect (() => {
+
+    if (localStorage.getItem('jwt')) {
+
+      const jwt = localStorage.getItem('jwt');
+
+      if (jwt) {
+
+        auth.getUserData(jwt)
+        .then((res) => {
+
+          if (res) {
+            setLoggedIn(true);
+            setCurrentUser({
+              id: res._id,
+              email: res.email,
+              name: res.name
+            });
+            history.push(location.pathname);
+          } else {
+            localStorage.removeItem('jwt');
+            history.push('/signin');
+          }
+        })
+      }
+
+    }
+    
+
+  }, []);
   
-  React.useEffect(() => {
-    const jwt = localStorage.getItem('jwt');
-    // проверка наличия токена и валидности токена
-    if (jwt) {
+  // React.useEffect(() => {
+  //   const jwt = localStorage.getItem('jwt');
+  //   // проверка наличия токена и валидности токена
+  //   if (jwt) {
       
-      auth.getUserData(jwt)
-      .then((res) => {
-        if (res) {
-          setLoggedIn(true);
-          setCurrentUser({
-            id: res._id,
-            email: res.email,
-            name: res.name
-          });
-        } else {
-          localStorage.removeItem('jwt');
-          history.push('/signin');
-        }
-      })
-      .catch(err => console.log(err));
+  //     auth.getUserData(jwt)
+  //     .then((res) => {
+  //       if (res) {
+  //         setLoggedIn(true);
+  //         setCurrentUser({
+  //           id: res._id,
+  //           email: res.email,
+  //           name: res.name
+  //         });
+  //       } else {
+  //         localStorage.removeItem('jwt');
+  //         history.push('/signin');
+  //       }
+  //     })
+  //     .catch(err => console.log(err));
 
-    }
-    // проверка наличия токена и валидности токена
-  }, [loggedIn]);
+  //   }
+  //   // проверка наличия токена и валидности токена
+  // }, [loggedIn]);
 
-  React.useEffect(() => {
-    if (loggedIn) {
-      history.push('/movies');
-    }
-  }, [loggedIn])
+  // React.useEffect(() => {
+  //   if (loggedIn) {
+  //     history.push('/');
+  //   }
+  // }, [loggedIn])
 
   React.useEffect(() => {
     // Загрузка карточек
@@ -116,6 +148,17 @@ function App() {
     }
     
   }, [location]);
+
+  // function checkToken() {
+  //   if (localStorage.getItem('jwt')) {
+
+  //       const token = localStorage.getItem('jwt');
+
+  //       if (token) {
+  //           getUserInfo(token);
+  //       }
+  //   }
+  // }
   
   function onClose () {
       setIsMenuOpen(false);
@@ -231,7 +274,7 @@ function App() {
         }
       } else if (isShortsOnly && (query === '' || !query)) {
 
-        result = initialCards.filter(card => card.duration <= 40);
+        result = initialCards.filter(card => card.duration <= SHORT_MOVIES);
      
         if (result.length === 0) {
           setIsSearchResults(true);
@@ -247,7 +290,7 @@ function App() {
 
       } else if (isShortsOnly && query) {
 
-        result = initialCards.filter(card => (card.duration <= 40) && (card.nameRU.toLowerCase().includes(query.toLowerCase())));
+        result = initialCards.filter(card => (card.duration <= SHORT_MOVIES) && (card.nameRU.toLowerCase().includes(query.toLowerCase())));
        
         if (result.length === 0) {
           setIsSearchResults(true);
@@ -284,7 +327,7 @@ function App() {
         }
       } else if (isShortsOnly && (query === '' || !query)) {
 
-        result = savedCards.filter(card => card.duration <= 40);
+        result = savedCards.filter(card => card.duration <= SHORT_MOVIES);
         
         if (result.length === 0) {
           setIsSavedCardsSearchResults(true);
@@ -296,7 +339,7 @@ function App() {
 
       } else if (isShortsOnly && query) {
 
-        result = savedCards.filter(card => (card.duration <= 40) && (card.nameRU.toLowerCase().includes(query.toLowerCase())));
+        result = savedCards.filter(card => (card.duration <= SHORT_MOVIES) && (card.nameRU.toLowerCase().includes(query.toLowerCase())));
         
         if (result.length === 0) {
           setIsSavedCardsSearchResults(true);
@@ -443,7 +486,7 @@ function App() {
           >
           </ProtectedRoute>
 
-          <Route path='/error'>
+          <Route path='*'>
 
             <NotFound />
 
