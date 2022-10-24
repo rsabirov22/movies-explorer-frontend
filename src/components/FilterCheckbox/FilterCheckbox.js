@@ -6,18 +6,8 @@ function FilterCheckBox ({ onShorts }) {
   const location = useLocation();
   const [isChecked, setIsChecked]= React.useState(false);
 
-  // const [isChecked, setIsChecked] = React.useState(location.pathname === '/movies' ? JSON.parse(localStorage.getItem('checked')) : false);
-
-  // console.log(isChecked);
-
   React.useEffect(() => {
-
     onShorts(isChecked);
-
-    // if (location.pathname === '/movies') {
-    //   localStorage.setItem('checked', JSON.stringify(isChecked));
-    // }
-
   }, [isChecked])
 
   React.useEffect(() => {
@@ -30,10 +20,6 @@ function FilterCheckBox ({ onShorts }) {
 
   function handleCheck () {
     setIsChecked(!isChecked);
-
-    // if (location.pathname === '/movies') {
-    //   localStorage.setItem('checked', JSON.stringify(!isChecked));
-    // }
   }
 
   return(

@@ -40,7 +40,9 @@ function MoviesCard ({ card, onCardSave, isSaved, onCardDelete }) {
               </button>}
 
         </div>
-        <img  className="movies-card__image" src={card.image} alt={card.description}/>
+        <a className="movies-card__link" target='blank' href={card.trailerLink}>
+          <img  className="movies-card__image" src={card.image} alt={card.description}/>
+        </a>
     </div>
   );
 }
