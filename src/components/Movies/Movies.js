@@ -18,10 +18,6 @@ function Movies ({
   isSearchResults, 
   onShorts }) {
 
-    // console.log(initialCards);
-    // console.log(filteredInitialCards);
-    // console.log(isSearchResults);
-
   return (
     <main className='movies'>
 
@@ -30,24 +26,6 @@ function Movies ({
         onShorts={onShorts}
         loggedIn={loggedIn}
       />
-
-      {/* {filteredInitialCards.length === 0 && initialCards.length > 0 && !isNoResults && 
-        <MoviesCardList
-          cards={initialCards}
-          onCardSave={onCardSave}
-          isSaved={isSaved}
-          isNoResults={isNoResults}
-      />}
-
-      {filteredInitialCards.length > 0 &&  
-        <MoviesCardList
-          cards={filteredInitialCards}
-          onCardSave={onCardSave}
-          isSaved={isSaved}
-          isNoResults={isNoResults}
-      />}
-
-      {isNoResults && <NoResults/>} */}
 
       {initialCards.length > 0 && !JSON.parse(localStorage.getItem('searchResults')) &&
         <MoviesCardList

@@ -26,9 +26,9 @@ function App() {
   const [successMessage, setSuccessMessage] = React.useState('');
   const [loggedIn, setLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = React.useState({});
-  // const [isNoResults, setIsNoResults] = React.useState(true);
   const [isShortsOnly, setIsShortsOnly] = React.useState(false);
   const [isSearchResults, setIsSearchResults] = React.useState(false);
+  const [isSavedCardsSearchResults, setIsSavedCardsSearchResults] = React.useState(false);
   // Карточки
   const [initialCards, setInitialCards] = React.useState([]);
   const [filteredInitialCards, setFilteredInitialCards] = React.useState([]);
@@ -88,8 +88,9 @@ function App() {
         localStorage.setItem('initialMovies', JSON.stringify(data));
 
         if (!JSON.parse(localStorage.getItem('searchResults'))) {
-          // setIsSearchResults(true);
+          
           makeCards(JSON.parse(localStorage.getItem('initialMovies')));
+        
         }
         
       })
@@ -105,15 +106,6 @@ function App() {
 
     const storageCards = JSON.parse(localStorage.getItem('searchResults'));
     const isSearchResults = JSON.parse(localStorage.getItem('isSearchResults'));
-
-    // if (loggedIn && storageCards && storageCards.length > 0) {
-
-    //   setFilteredInitialCards(storageCards);
-
-    // } else if (loggedIn && storageCards && storageCards.length === 0) {
-    //   // setIsNoResults(true);
-    //   setFilteredInitialCards(storageCards);
-    // }
 
     if (loggedIn && storageCards) {
 
@@ -148,7 +140,6 @@ function App() {
       return auth.authorize(data.password, data.email)
       .then((data) => {
         if (data.token) {
-          
           localStorage.setItem('jwt', data.token);
           setLoggedIn(true);
           history.push('/movies');
@@ -176,7 +167,6 @@ function App() {
   }
   // Переводим полученные фильмы в формат карточки приложения
   function makeCards(initialMovies) {
-    // console.log('fired')
     const cards = initialMovies.map((movie) => ({
       movieId: movie.id,
       country: movie.country,
@@ -277,7 +267,7 @@ function App() {
 
       if ((query === '' || !query) && !isShortsOnly) {
 
-        setIsSearchResults(false);
+        setIsSavedCardsSearchResults(false);
         setFilteredSavedCards([]);
         getSavedCards();
 
@@ -286,10 +276,10 @@ function App() {
         result = savedCards.filter(card => card.nameRU.toLowerCase().includes(query.toLowerCase()));
         
         if (result.length === 0) {
-          setIsSearchResults(true);
+          setIsSavedCardsSearchResults(true);
           setFilteredSavedCards([]);
         } else {
-          setIsSearchResults(false);
+          setIsSavedCardsSearchResults(true);
           setFilteredSavedCards(result);
         }
       } else if (isShortsOnly && (query === '' || !query)) {
@@ -297,10 +287,10 @@ function App() {
         result = savedCards.filter(card => card.duration <= 40);
         
         if (result.length === 0) {
-          setIsSearchResults(true);
+          setIsSavedCardsSearchResults(true);
           setFilteredSavedCards([]);
         } else {
-          setIsSearchResults(false);
+          setIsSavedCardsSearchResults(true);
           setFilteredSavedCards(result);
         }
 
@@ -309,10 +299,10 @@ function App() {
         result = savedCards.filter(card => (card.duration <= 40) && (card.nameRU.toLowerCase().includes(query.toLowerCase())));
         
         if (result.length === 0) {
-          setIsSearchResults(true);
+          setIsSavedCardsSearchResults(true);
           setFilteredSavedCards([]);
         } else {
-          setIsSearchResults(false);
+          setIsSavedCardsSearchResults(true);
           setFilteredSavedCards(result);
         }
 
@@ -362,6 +352,7 @@ function App() {
     setErrorMessage('');
     setLoggedIn(false);
     setIsSearchResults(false);
+    setIsSavedCardsSearchResults(false);
     setSuccessMessage('');
     history.push('/');
   }
@@ -446,7 +437,7 @@ function App() {
             isMenuOpen={isMenuOpen}
             onClose={onClose}
             onCardDelete={handleCardDelete}
-            isSearchResults={isSearchResults}
+            isSavedCardsSearchResults={isSavedCardsSearchResults}
             savedCards={savedCards}
             filteredSavedCards={filteredSavedCards}
           >

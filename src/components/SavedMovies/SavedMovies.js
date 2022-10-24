@@ -12,7 +12,7 @@ function SavedMovies ({
   onClose, 
   onCardDelete, 
   onSearch, 
-  isSearchResults, 
+  isSavedCardsSearchResults, 
   onShorts }) {
 
   return (
@@ -23,23 +23,21 @@ function SavedMovies ({
         onShorts={onShorts}
       />
 
-      {filteredSavedCards.length === 0 && savedCards.length > 0 && !isSearchResults && 
+      {savedCards.length > 0 && !isSavedCardsSearchResults &&
         <MoviesCardList 
           cards={savedCards}
           onCardDelete={onCardDelete}
-          isSearchResults={isSearchResults}
       />}
 
       {filteredSavedCards.length > 0 &&  
         <MoviesCardList 
           cards={filteredSavedCards}
           onCardDelete={onCardDelete}
-          isSearchResults={isSearchResults}
       />}
 
-      {isSearchResults && <NoResults/>}
+      {filteredSavedCards.length === 0 && isSavedCardsSearchResults && <NoResults/>}
 
-      {filteredSavedCards.length === 0 && savedCards.length === 0 && !isSearchResults && 
+      {filteredSavedCards.length === 0 && savedCards.length === 0 && !isSavedCardsSearchResults && 
         <section className="movies__preloader">
           <Preloader />
         </section>}
