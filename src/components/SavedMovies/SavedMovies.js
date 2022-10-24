@@ -3,7 +3,6 @@ import SearchForm from '../SearchForm/SearchForm.js';
 import MoviesCardList from '../MoviesCardList/MoviesCardList.js';
 import Navigation from "../Navigation/Navigation";
 import NoResults from "../NoResults/NoResults.js";
-import Preloader from '../Preloader/Preloader.js';
 
 function SavedMovies ({ 
   savedCards, 
@@ -12,7 +11,7 @@ function SavedMovies ({
   onClose, 
   onCardDelete, 
   onSearch, 
-  isSavedCardsSearchResults, 
+  isSavedCardsSearchResults,
   onShorts }) {
 
   return (
@@ -35,12 +34,9 @@ function SavedMovies ({
           onCardDelete={onCardDelete}
       />}
 
-      {filteredSavedCards.length === 0 && isSavedCardsSearchResults && <NoResults/>}
+      {filteredSavedCards.length === 0 && isSavedCardsSearchResults && <NoResults text={'Ничего не найдено'} />}
 
-      {filteredSavedCards.length === 0 && savedCards.length === 0 && !isSavedCardsSearchResults && 
-        <section className="movies__preloader">
-          <Preloader />
-        </section>}
+      {savedCards.length === 0 && <NoResults text={'Добавьте свой первый фильм'} />}
 
       <Navigation
         className="navigation navigation_mobile"

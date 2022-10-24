@@ -178,7 +178,7 @@ function App() {
 
     mainApi.getSavedMovies()
     .then((data) => {
-      
+
       setSavedCards(data.reverse());
 
     })

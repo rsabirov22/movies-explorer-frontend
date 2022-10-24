@@ -41,7 +41,7 @@ function Movies ({
           isSaved={isSaved}
       />}
 
-      {filteredInitialCards.length === 0 && isSearchResults && <NoResults/>}
+      {filteredInitialCards.length === 0 && isSearchResults && <NoResults text={'Ничего не найдено'} />}
 
       {filteredInitialCards.length === 0 && initialCards.length === 0 && !isSearchResults && 
         <section className="movies__preloader">
