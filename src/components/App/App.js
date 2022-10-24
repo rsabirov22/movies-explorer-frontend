@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Route, Switch, Link, useHistory, useLocation } from 'react-router-dom';
+import { Route, Switch, Link, useHistory, useLocation, Redirect } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
 import { SHORT_MOVIES } from '../../utils/constants.js'
 
@@ -373,19 +373,23 @@ function App() {
 
           <Route path='/signup'>
 
-            <Register 
-              onRegister={onRegister}
-              errorMessage={errorMessage}
-            />
+            {loggedIn ?
+              <Redirect to= '/movies'/> :
+              <Register 
+                onRegister={onRegister}
+                errorMessage={errorMessage}
+              />}
             
           </Route>
 
           <Route path='/signin'>
 
-            <Login
-              onLogin={onLogin}
-              errorMessage={errorMessage}
-            />
+            {loggedIn ? 
+              <Redirect to= '/movies'/> :
+              <Login
+                onLogin={onLogin}
+                errorMessage={errorMessage}
+              />}
 
           </Route>
 
