@@ -15,11 +15,12 @@ function Movies ({
   onCardSave, 
   isSaved, 
   onSearch, 
-  isNoResults, 
+  isSearchResults, 
   onShorts }) {
 
     // console.log(initialCards);
     // console.log(filteredInitialCards);
+    // console.log(isSearchResults);
 
   return (
     <main className='movies'>
@@ -48,25 +49,23 @@ function Movies ({
 
       {isNoResults && <NoResults/>} */}
 
-      {initialCards.length > 0 && 
+      {initialCards.length > 0 && !JSON.parse(localStorage.getItem('searchResults')) &&
         <MoviesCardList
           cards={initialCards}
           onCardSave={onCardSave}
           isSaved={isSaved}
-          isNoResults={isNoResults}
       />}
 
-      {filteredInitialCards.length > 0 &&  
+      {filteredInitialCards.length > 0 &&
         <MoviesCardList
           cards={filteredInitialCards}
           onCardSave={onCardSave}
           isSaved={isSaved}
-          isNoResults={isNoResults}
       />}
 
-      {filteredInitialCards.length === 0 && <NoResults/>}
+      {filteredInitialCards.length === 0 && isSearchResults && <NoResults/>}
 
-      {filteredInitialCards.length === 0 && initialCards.length === 0 && !isNoResults && 
+      {filteredInitialCards.length === 0 && initialCards.length === 0 && !isSearchResults && 
         <section className="movies__preloader">
           <Preloader />
         </section>}

@@ -26,8 +26,9 @@ function App() {
   const [successMessage, setSuccessMessage] = React.useState('');
   const [loggedIn, setLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = React.useState({});
-  const [isNoResults, setIsNoResults] = React.useState(false);
+  // const [isNoResults, setIsNoResults] = React.useState(true);
   const [isShortsOnly, setIsShortsOnly] = React.useState(false);
+  const [isSearchResults, setIsSearchResults] = React.useState(false);
   // Карточки
   const [initialCards, setInitialCards] = React.useState([]);
   const [filteredInitialCards, setFilteredInitialCards] = React.useState([]);
@@ -85,8 +86,11 @@ function App() {
 
         // сохраняем данные с сервера в локальное хранилище
         localStorage.setItem('initialMovies', JSON.stringify(data));
-        
-        makeCards(JSON.parse(localStorage.getItem('initialMovies')));
+
+        if (!JSON.parse(localStorage.getItem('searchResults'))) {
+          // setIsSearchResults(true);
+          makeCards(JSON.parse(localStorage.getItem('initialMovies')));
+        }
         
       })
       .catch(err => console.log(err));
@@ -97,18 +101,29 @@ function App() {
     // Загрузка карточек
   }, [loggedIn]);
 
-  // React.useEffect(() => {
+  React.useEffect(() => {
 
-  //   const storageCards = JSON.parse(localStorage.getItem('searchResults'));
+    const storageCards = JSON.parse(localStorage.getItem('searchResults'));
+    const isSearchResults = JSON.parse(localStorage.getItem('isSearchResults'));
 
-  //   // console.log('storage cards', storageCards)
+    // if (loggedIn && storageCards && storageCards.length > 0) {
 
-  //   if (loggedIn && ((storageCards && storageCards.length > 0) || (storageCards && storageCards.length === 0))) {
-  //     setFilteredInitialCards(storageCards);
-  //     setInitialCards(storageCards);
-  //   }
+    //   setFilteredInitialCards(storageCards);
+
+    // } else if (loggedIn && storageCards && storageCards.length === 0) {
+    //   // setIsNoResults(true);
+    //   setFilteredInitialCards(storageCards);
+    // }
+
+    if (loggedIn && storageCards) {
+
+      setIsSearchResults(isSearchResults);
+      setFilteredInitialCards(storageCards);
+      makeCards(JSON.parse(localStorage.getItem('initialMovies')));
+
+    }
     
-  // }, [location]);
+  }, [location]);
   
   function onClose () {
       setIsMenuOpen(false);
@@ -161,7 +176,7 @@ function App() {
   }
   // Переводим полученные фильмы в формат карточки приложения
   function makeCards(initialMovies) {
-
+    // console.log('fired')
     const cards = initialMovies.map((movie) => ({
       movieId: movie.id,
       country: movie.country,
@@ -204,7 +219,7 @@ function App() {
 
       if ((query === '' || !query) && !isShortsOnly) {
 
-        setIsNoResults(false);
+        setIsSearchResults(false);
         setFilteredInitialCards([]);
         localStorage.removeItem('searchResults');
         makeCards(JSON.parse(localStorage.getItem('initialMovies')));
@@ -214,12 +229,14 @@ function App() {
         result = initialCards.filter(card => card.nameRU.toLowerCase().includes(query.toLowerCase()));
         
         if (result.length === 0) {
-          setIsNoResults(true);
+          setIsSearchResults(true);
           setFilteredInitialCards([]);
           localStorage.setItem('searchResults', JSON.stringify(result));
+          localStorage.setItem('isSearchResults', true);
         } else {
-          setIsNoResults(false);
+          setIsSearchResults(true);
           localStorage.setItem('searchResults', JSON.stringify(result));
+          localStorage.setItem('isSearchResults', true);
           setFilteredInitialCards(result);
         }
       } else if (isShortsOnly && (query === '' || !query)) {
@@ -227,12 +244,14 @@ function App() {
         result = initialCards.filter(card => card.duration <= 40);
      
         if (result.length === 0) {
-          setIsNoResults(true);
+          setIsSearchResults(true);
           setFilteredInitialCards([]);
           localStorage.setItem('searchResults', JSON.stringify(result));
+          localStorage.setItem('isSearchResults', true);
         } else {
-          setIsNoResults(false);
+          setIsSearchResults(true);
           localStorage.setItem('searchResults', JSON.stringify(result));
+          localStorage.setItem('isSearchResults', true);
           setFilteredInitialCards(result);
         }
 
@@ -241,12 +260,14 @@ function App() {
         result = initialCards.filter(card => (card.duration <= 40) && (card.nameRU.toLowerCase().includes(query.toLowerCase())));
        
         if (result.length === 0) {
-          setIsNoResults(true);
+          setIsSearchResults(true);
           setFilteredInitialCards([]);
           localStorage.setItem('searchResults', JSON.stringify(result));
+          localStorage.setItem('isSearchResults', true);
         } else {
-          setIsNoResults(false);
+          setIsSearchResults(true);
           localStorage.setItem('searchResults', JSON.stringify(result));
+          localStorage.setItem('isSearchResults', true);
           setFilteredInitialCards(result);
         }
 
@@ -256,7 +277,7 @@ function App() {
 
       if ((query === '' || !query) && !isShortsOnly) {
 
-        setIsNoResults(false);
+        setIsSearchResults(false);
         setFilteredSavedCards([]);
         getSavedCards();
 
@@ -265,10 +286,10 @@ function App() {
         result = savedCards.filter(card => card.nameRU.toLowerCase().includes(query.toLowerCase()));
         
         if (result.length === 0) {
-          setIsNoResults(true);
+          setIsSearchResults(true);
           setFilteredSavedCards([]);
         } else {
-          setIsNoResults(false);
+          setIsSearchResults(false);
           setFilteredSavedCards(result);
         }
       } else if (isShortsOnly && (query === '' || !query)) {
@@ -276,10 +297,10 @@ function App() {
         result = savedCards.filter(card => card.duration <= 40);
         
         if (result.length === 0) {
-          setIsNoResults(true);
+          setIsSearchResults(true);
           setFilteredSavedCards([]);
         } else {
-          setIsNoResults(false);
+          setIsSearchResults(false);
           setFilteredSavedCards(result);
         }
 
@@ -288,10 +309,10 @@ function App() {
         result = savedCards.filter(card => (card.duration <= 40) && (card.nameRU.toLowerCase().includes(query.toLowerCase())));
         
         if (result.length === 0) {
-          setIsNoResults(true);
+          setIsSearchResults(true);
           setFilteredSavedCards([]);
         } else {
-          setIsNoResults(false);
+          setIsSearchResults(false);
           setFilteredSavedCards(result);
         }
 
@@ -333,13 +354,14 @@ function App() {
     localStorage.removeItem('searchQuery');
     localStorage.removeItem('searchResults');
     localStorage.removeItem('checked');
+    localStorage.removeItem('isSearchResults');
     setInitialCards([]);
     setFilteredInitialCards([]);
     setSavedCards([]);
     setFilteredSavedCards([]);
     setErrorMessage('');
     setLoggedIn(false);
-    setIsNoResults(false);
+    setIsSearchResults(false);
     setSuccessMessage('');
     history.push('/');
   }
@@ -391,7 +413,7 @@ function App() {
             loggedIn={loggedIn}
             component={Movies}
             isMenuOpen={isMenuOpen}
-            isNoResults={isNoResults}
+            isSearchResults={isSearchResults}
             onClose={onClose}
             onSearch={handleSearch}
             onShorts={setIsShortsOnly}
@@ -424,7 +446,7 @@ function App() {
             isMenuOpen={isMenuOpen}
             onClose={onClose}
             onCardDelete={handleCardDelete}
-            isNoResults={isNoResults}
+            isSearchResults={isSearchResults}
             savedCards={savedCards}
             filteredSavedCards={filteredSavedCards}
           >
