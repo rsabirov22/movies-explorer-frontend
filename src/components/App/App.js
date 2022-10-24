@@ -36,17 +36,6 @@ function App() {
   const [savedCards, setSavedCards] = React.useState([]);
   const [filteredSavedCards, setFilteredSavedCards] = React.useState([]);
   
-
-  // console.log(cards);
-  // console.log(savedMovies);
-  // console.log(successMessage);
-  // console.log(errorMessage);
-  //  console.log(currentUser);
-  //  console.log(savedCards);
-  // console.log('state cards', filteredInitialCards)
-  // console.log(isNoResults);
-  // console.log(loggedIn);
-
   React.useEffect (() => {
 
     if (localStorage.getItem('jwt')) {
@@ -75,40 +64,8 @@ function App() {
 
     }
     
-
-  }, []);
+  }, [loggedIn]);
   
-  // React.useEffect(() => {
-  //   const jwt = localStorage.getItem('jwt');
-  //   // проверка наличия токена и валидности токена
-  //   if (jwt) {
-      
-  //     auth.getUserData(jwt)
-  //     .then((res) => {
-  //       if (res) {
-  //         setLoggedIn(true);
-  //         setCurrentUser({
-  //           id: res._id,
-  //           email: res.email,
-  //           name: res.name
-  //         });
-  //       } else {
-  //         localStorage.removeItem('jwt');
-  //         history.push('/signin');
-  //       }
-  //     })
-  //     .catch(err => console.log(err));
-
-  //   }
-  //   // проверка наличия токена и валидности токена
-  // }, [loggedIn]);
-
-  // React.useEffect(() => {
-  //   if (loggedIn) {
-  //     history.push('/');
-  //   }
-  // }, [loggedIn])
-
   React.useEffect(() => {
     // Загрузка карточек
     if (loggedIn) {
@@ -149,17 +106,6 @@ function App() {
     
   }, [location]);
 
-  // function checkToken() {
-  //   if (localStorage.getItem('jwt')) {
-
-  //       const token = localStorage.getItem('jwt');
-
-  //       if (token) {
-  //           getUserInfo(token);
-  //       }
-  //   }
-  // }
-  
   function onClose () {
       setIsMenuOpen(false);
   }
@@ -392,6 +338,7 @@ function App() {
     setFilteredInitialCards([]);
     setSavedCards([]);
     setFilteredSavedCards([]);
+    setCurrentUser({});
     setErrorMessage('');
     setLoggedIn(false);
     setIsSearchResults(false);
