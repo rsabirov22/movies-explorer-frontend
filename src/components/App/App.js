@@ -35,6 +35,9 @@ function App() {
   const [filteredInitialCards, setFilteredInitialCards] = React.useState([]);
   const [savedCards, setSavedCards] = React.useState([]);
   const [filteredSavedCards, setFilteredSavedCards] = React.useState([]);
+
+  // console.log(initialCards);
+  // console.log(savedCards);
   
   React.useEffect (() => {
 
@@ -302,26 +305,42 @@ function App() {
   }
 
   function handleCardSave(card) {
-    mainApi.postMovie(card)
-    .then((data) => {
-      setSavedCards([data, ...savedCards]);
-    })
-    .catch(err => console.log(err));
+
+    const isCardSaved = isSaved(card);
+
+    if (!isCardSaved) {
+
+      mainApi.postMovie(card)
+      .then((data) => {
+          setSavedCards([data, ...savedCards]);
+      })
+      .catch(err => console.log(err));
+
+    } 
+    else {
+      // находим текущую сохраненную карточку в начальных карточках по id из BeatfilmMovies
+      const savedCard = savedCards.filter(savedCard => savedCard.movieId === card.movieId);
+      // берем из нее _id нашей базы и удаляем
+      handleCardDelete(savedCard[0]._id);
+    }
+
   }
 
   function handleCardDelete(id) {
 
     mainApi.deleteMovie(id)
     .then((data) => {
-
+      
       const result = savedCards.filter(savedCard => savedCard._id !== id);
       setSavedCards(result);
       
     })
     .catch(err => console.log(err));
+
   }
 
   function isSaved(card) {
+    
     const result = savedCards.some((savedCard) => savedCard.movieId === card.movieId);
     
     return result;

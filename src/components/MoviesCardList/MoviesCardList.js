@@ -52,7 +52,7 @@ function MoviesCardList ({ cards, onCardSave, isSaved, onCardDelete }) {
             <MoviesCard 
               card={movie}
               onCardSave={onCardSave}
-              key={movie.movieId}
+              key={movie._id ? movie._id : movie.movieId}
               isSaved={isSaved}
               onCardDelete={onCardDelete}
             >
