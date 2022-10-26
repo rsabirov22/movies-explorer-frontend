@@ -36,38 +36,43 @@ function App() {
   const [savedCards, setSavedCards] = React.useState([]);
   const [filteredSavedCards, setFilteredSavedCards] = React.useState([]);
 
-  // console.log(initialCards);
-  // console.log(savedCards);
-  
   React.useEffect (() => {
-
-    if (localStorage.getItem('jwt')) {
-
-      const jwt = localStorage.getItem('jwt');
-
-      if (jwt) {
-
-        auth.getUserData(jwt)
-        .then((res) => {
-
-          if (res) {
-            setLoggedIn(true);
-            setCurrentUser({
-              id: res._id,
-              email: res.email,
-              name: res.name
-            });
-            history.push(location.pathname);
-          } else {
-            localStorage.removeItem('jwt');
-            history.push('/signin');
-          }
-        })
+    
+    auth.getUserData()
+    .then((res) => {
+    
+      if (res) {
+        setLoggedIn(true);
+        setCurrentUser({
+          id: res._id,
+          email: res.email,
+          name: res.name
+        });
+        history.push(location.pathname);
       }
 
-    }
-    
-  }, [loggedIn]);
+    })
+    .catch((err) => {      
+      localStorage.removeItem('initialMovies');
+      localStorage.removeItem('searchQuery');
+      localStorage.removeItem('searchResults');
+      localStorage.removeItem('checked');
+      localStorage.removeItem('isSearchResults');
+      setInitialCards([]);
+      setFilteredInitialCards([]);
+      setSavedCards([]);
+      setFilteredSavedCards([]);
+      setCurrentUser({});
+      setErrorMessage('');
+      setLoggedIn(false);
+      setIsSearchResults(false);
+      setIsSavedCardsSearchResults(false);
+      setSuccessMessage('');
+      history.push('/signin');
+      console.log(err)
+    });
+
+  }, []);
   
   React.useEffect(() => {
     // Загрузка карточек
@@ -132,7 +137,6 @@ function App() {
       return auth.authorize(data.password, data.email)
       .then((data) => {
         if (data.token) {
-          localStorage.setItem('jwt', data.token);
           setLoggedIn(true);
           history.push('/movies');
         } else {
@@ -347,7 +351,6 @@ function App() {
   }
 
   const signOut = () => {
-    localStorage.removeItem('jwt');
     localStorage.removeItem('initialMovies');
     localStorage.removeItem('searchQuery');
     localStorage.removeItem('searchResults');
