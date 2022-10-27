@@ -38,41 +38,54 @@ function App() {
 
   React.useEffect (() => {
     
-    auth.getUserData()
-    .then((res) => {
-    
-      if (res) {
-        setLoggedIn(true);
-        setCurrentUser({
-          id: res._id,
-          email: res.email,
-          name: res.name
+    if (localStorage.getItem('loggedIn')) {
+
+    const loggedIn = localStorage.getItem('loggedIn');
+
+    if (loggedIn) {
+
+        auth.getUserData()
+        .then((res) => {
+
+          if (res) {
+            
+            setLoggedIn(true);
+            setCurrentUser({
+              id: res._id,
+              email: res.email,
+              name: res.name
+            });
+            history.push(location.pathname);
+
+          }
+
+        })
+        .catch((err) => {      
+          localStorage.removeItem('loggedIn');
+          localStorage.removeItem('initialMovies');
+          localStorage.removeItem('searchQuery');
+          localStorage.removeItem('searchResults');
+          localStorage.removeItem('checked');
+          localStorage.removeItem('isSearchResults');
+          setInitialCards([]);
+          setFilteredInitialCards([]);
+          setSavedCards([]);
+          setFilteredSavedCards([]);
+          setCurrentUser({});
+          setErrorMessage('');
+          setLoggedIn(false);
+          setIsSearchResults(false);
+          setIsSavedCardsSearchResults(false);
+          setSuccessMessage('');
+          history.push('/');
+          console.log(err)
         });
-        history.push(location.pathname);
+
       }
 
-    })
-    .catch((err) => {      
-      localStorage.removeItem('initialMovies');
-      localStorage.removeItem('searchQuery');
-      localStorage.removeItem('searchResults');
-      localStorage.removeItem('checked');
-      localStorage.removeItem('isSearchResults');
-      setInitialCards([]);
-      setFilteredInitialCards([]);
-      setSavedCards([]);
-      setFilteredSavedCards([]);
-      setCurrentUser({});
-      setErrorMessage('');
-      setLoggedIn(false);
-      setIsSearchResults(false);
-      setIsSavedCardsSearchResults(false);
-      setSuccessMessage('');
-      history.push('/signin');
-      console.log(err)
-    });
+    }
 
-  }, []);
+  }, [loggedIn]);
   
   React.useEffect(() => {
     // Загрузка карточек
@@ -134,10 +147,12 @@ function App() {
 
   const onLogin = (data) => {
     if (data.password && data.email) {
+      
       return auth.authorize(data.password, data.email)
       .then((data) => {
         if (data.token) {
           setLoggedIn(true);
+          localStorage.setItem('loggedIn', true);
           history.push('/movies');
         } else {
           setErrorMessage(data.error);
@@ -351,6 +366,11 @@ function App() {
   }
 
   const signOut = () => {
+    auth.signout()
+    .then((res) => {})
+    .catch(err => console.log(err));
+
+    localStorage.removeItem('loggedIn');
     localStorage.removeItem('initialMovies');
     localStorage.removeItem('searchQuery');
     localStorage.removeItem('searchResults');

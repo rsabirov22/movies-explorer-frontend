@@ -35,3 +35,15 @@ export const getUserData = () => {
   })
   .then(handleResponse);
 }
+
+export const signout = () => {
+  return fetch(`${BASE_URL}/api/signout`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+    withCredentials: true,
+  })
+  .then(handleResponse);
+}
