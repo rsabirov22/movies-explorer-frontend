@@ -3,6 +3,10 @@
   padding: 80px 0 20px 0;
 }
 
+.footer_none {
+  display: none;
+}
+
 .footer__container {
   box-sizing: border-box;
   padding: 0 30px;

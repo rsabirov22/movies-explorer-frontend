@@ -1,12 +1,21 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import { useForm } from "react-hook-form";
 import SectionWithForm from '../SectionWithForm/SectionWithForm.js';
+import MessageBlock from '../MessageBlock/MessageBlock.js';
 
-function Register () {
+function Register ({ onRegister, errorMessage }) {
+
+  const { register, handleSubmit, formState: { errors, isValid } } = useForm({ mode: 'onChange' });
+
+  const onSubmit = (data) => {
+    onRegister(data);
+  }
+
   return (
     <SectionWithForm>
 
-      <form className="section-form__form" noValidate>
+      <form className="section-form__form" onSubmit={handleSubmit(onSubmit)} noValidate>
 
         <h1 className='section-form__title'>Добро пожаловать!</h1>
 
@@ -17,11 +26,19 @@ function Register () {
             className="section-form__input"
             id="nameId"
             name="name"
-            minLength="2"
-            required
-            autoComplete="off"
+            {...register("name", { 
+              required: true,
+              minLength: 2,
+              maxLength: 30,
+              pattern: /^[a-zа-яё -]/i
+             })}
           />
-          <span id="nameId-error" className="section-form__error"></span>
+          <span id="nameId-error" className="section-form__field-error">
+            {errors.name && errors.name.type === 'minLength' && 'Слишком короткое имя'}
+            {errors.name && errors.name.type === 'required' && 'Поле не может быть пустым'}
+            {errors.name && errors.name.type === 'maxLength' && 'Слишком длинное имя'}
+            {errors.name && errors.name.type === 'pattern' && 'Использованы недопустимые символы'}
+          </span>
         </label>
 
         <label className="section-form__field">
@@ -31,11 +48,15 @@ function Register () {
             className="section-form__input"
             id="emailId"
             name="email"
-            minLength="2"
-            required
-            autoComplete="off"
+            {...register("email", { 
+              required: true,
+              pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+             })}
           />
-          <span id="emailId-error" className="section-form__error"></span>
+          <span id="emailId-error" className="section-form__field-error">
+            {errors.email && errors.email.type === 'required' && 'Поле не может быть пустым'}
+            {errors.email && errors.email.type === 'pattern' && 'Неверный формат почты'}
+          </span>
         </label>
 
         <label className="section-form__field">
@@ -45,14 +66,24 @@ function Register () {
             className="section-form__input"
             id="passwordId"
             name="password"
-            minLength="2"
-            required
-            autoComplete="off"
+            {...register("password", {
+              required: true,
+             })}
           />
-          <span id="passwordId-error" className="section-form__error">Что-то пошло не так...</span>
+          <span id="passwordId-error" className="section-form__field-error">
+            {errors.password && errors.password.type === 'required' && 'Поле не может быть пустым'}
+          </span>
         </label>
 
-        <button className='section-form__submit-btn' type='submit'>Зарегистрироваться</button>
+        <MessageBlock errorMessage={errorMessage}/>
+
+        <button 
+          className={isValid ? 'section-form__submit-btn' : 'section-form__submit-btn section-form__submit-btn_disabled'}
+          type='submit'
+          disabled={!isValid}
+        >
+            Зарегистрироваться
+        </button>
 
       </form>      
 

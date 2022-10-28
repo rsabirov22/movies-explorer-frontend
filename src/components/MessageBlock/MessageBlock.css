@@ -1,0 +1,25 @@
+.message {
+  margin: auto 0 20px 0;
+  height: 15px;
+}
+
+.message__error,
+.message__success {
+  font-family: 'Inter', 'Arial', sans-serif;
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 1.2;
+  color: #FF004C;
+  text-align: center;
+  display: none;
+  margin: 0;
+}
+
+.message__success {
+  color: #3DDC84;
+}
+
+.message__error_visible,
+.message__success_visible {
+  display: block;
+}
