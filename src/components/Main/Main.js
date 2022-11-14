@@ -4,9 +4,10 @@ import AboutProject from '../AboutProject/AboutProject.js';
 import Techs from '../Techs/Techs.js';
 import AboutMe from '../AboutMe/AboutMe.js';
 import Portfolio from '../Portfolio/Portfolio.js';
+import Navigation from "../Navigation/Navigation.js";
 import './Main.css';
 
-function Main () {
+function Main ({ isMenuOpen, onClose }) {
     return (
         <main className='content'>
 
@@ -19,6 +20,12 @@ function Main () {
             <AboutMe />
 
             <Portfolio />
+
+            <Navigation
+              className="navigation navigation_mobile"
+              isOpen={isMenuOpen}
+              onClose={onClose}
+            />
 
         </main>
     );

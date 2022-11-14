@@ -16,6 +16,9 @@ function MoviesCard ({ card, onCardSave, isSaved, onCardDelete }) {
 
   return (
     <div className="movies-card">
+        <a className="movies-card__link" target='blank' href={card.trailerLink}>
+          <img  className="movies-card__image" src={card.image} alt={card.description}/>
+        </a>
         <div className="movies-card__content">
           <div className="movies-card__content-block">
             <h2 className="movies-card__title">{card.nameRU}</h2>
@@ -40,9 +43,6 @@ function MoviesCard ({ card, onCardSave, isSaved, onCardDelete }) {
               </button>}
 
         </div>
-        <a className="movies-card__link" target='blank' href={card.trailerLink}>
-          <img  className="movies-card__image" src={card.image} alt={card.description}/>
-        </a>
     </div>
   );
 }

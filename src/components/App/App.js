@@ -409,7 +409,10 @@ function App() {
 
           <Route exact={true} path='/'>
 
-            <Main />
+            <Main
+              isMenuOpen={isMenuOpen}
+              onClose={onClose}
+            />
 
           </Route>
 

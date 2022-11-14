@@ -37,7 +37,7 @@ function SearchForm ({ onSearch, onShorts }) {
                   onChange={({ target }) => setSearchQuery(target.value)}
                 >
                 </input>
-                <button className='search-form__button' type='submit'>Найти</button>
+                <button className='search-form__button' type='submit'></button>
             </form>
           </div>
           <div className="search-form__toggle">
